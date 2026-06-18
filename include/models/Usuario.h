@@ -16,7 +16,7 @@ public:
     
     //Getters para leer los atributos de esa clase
     int getId();
-    string getNombre();
+    string getNombreS();
     string getCorreo();
     string getPassword();
 
