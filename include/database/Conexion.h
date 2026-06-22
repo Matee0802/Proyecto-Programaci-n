@@ -1,16 +1,27 @@
 #ifndef CONEXION_H
 #define CONEXION_H
-#include<iostream>
-#include<sqlite3.h>
+
+#include <mysql/mysql.h>
+#include <string>
+
 using namespace std;
-class Conexion{
+
+class Conexion {
 private:
-    sqlite3 *db;
-    string nombreBD;
+    // Mismos valores de configuración que tu archivo conexion.php
+    string host;
+    string user;
+    string pass;
+    string db;
+    int puerto;
+    string charset;
+
 public:
-    Conexion(string nombreBD);
+    // Este objeto "conn" va a cumplir la funcion de tu variable "$pdo" en PHP
+    MYSQL* conn;
+
+    Conexion();
     bool conectar();
-    sqlite3* getDB();
-    void cerrar();
+    void desconectar();
 };
-#endif // CONEXION_H
+#endif
