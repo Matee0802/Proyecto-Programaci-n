@@ -1,16 +1,15 @@
-#include "Conexion.h"
+#include "../../include/database/Conexion.h"
 #include <iostream>
 using namespace std;
 
-Conexion::Conexion(string nombreBD){
-    this->nombreBD =
-    nombreBD;
+Conexion::Conexion(string spotcloud){
+    this->spotcloud = spotcloud;
     db = nullptr;
 }
 
 bool Conexion::conectar(){
     int resultado =
-    sqlite3_open(nombreBD.c_str(),&db);
+    sqlite3_open(spotcloud.c_str(),&db);
     if(resultado != SQLITE_OK){
         cout<<"Error al conectar BD"<<endl;
         return false;
