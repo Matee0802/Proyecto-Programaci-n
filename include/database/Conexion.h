@@ -1,27 +1,25 @@
 #ifndef CONEXION_H
 #define CONEXION_H
 
-#include <mysql/mysql.h>
-#include <string>
-
-using namespace std;
+#include <QtSql/QSqlDatabase>
+#include <QtSql/QSqlQuery>
+#include <QtSql/QSqlError>
+#include <QString>
 
 class Conexion {
 private:
-    // Mismos valores de configuración que tu archivo conexion.php
-    string host;
-    string user;
-    string pass;
-    string db;
+    QString host;
+    QString user;
+    QString pass;
+    QString databaseName;
     int puerto;
-    string charset;
 
 public:
-    // Este objeto "conn" va a cumplir la funcion de tu variable "$pdo" en PHP
-    MYSQL* conn;
+    QSqlDatabase db;
 
     Conexion();
     bool conectar();
     void desconectar();
 };
-#endif
+
+#endif // CONEXION_H

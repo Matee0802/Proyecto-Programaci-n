@@ -1,25 +1,48 @@
 #include "dao/ColaCancionesDAOImpl.h"
 #include "database/Conexion.h"
-#include <iostream>
+#include <QtSql/QSqlQuery>
+#include <QtSql/QSqlError>
+#include <QDebug>
 
-using namespace std;
+void ColaCancionesDAOImpl::insertar(ColaCanciones cc)
+{
+    QSqlQuery query;
+    query.prepare("INSERT INTO cola_canciones (id_cola, id_cancion, orden, reproducida) VALUES (:id_cola, :id_cancion, :orden, :reproducida)");
+    query.bindValue(":id_cola", cc.getIdCola());
+    query.bindValue(":id_cancion", cc.getIdCancion());
+    query.bindValue(":orden", cc.getOrden());
+    query.bindValue(":reproducida", cc.getReproducida());
 
-// Implementacion de los metodos de la clase ColaCancionesDAOImpl
-void ColaCancionesDAOImpl::insertar(ColaCanciones cc) {
-    // Agrega una cancion a la fila de espera de una cola especifica
-    cout << "[BD] Agregando cancion ID " << cc.getIdCancion() 
-         << " a la cola ID " << cc.getIdCola() 
-         << " en la posicion " << cc.getOrden() << endl;
+    if (!query.exec())
+    {
+        qDebug() << "Error al insertar ColaCanciones:" << query.lastError().text();
+    }
 }
 
-void ColaCancionesDAOImpl::actualizar(ColaCanciones cc) {
-    // Este es clave: cambia el estado 'reproducida' (true/false) al pasar de cancion
-    cout << "[BD] Modificando estado en cola: Cancion ID " << cc.getIdCancion() 
-         << " -> Reproducida: " << (cc.getReproducida() ? "SI" : "NO") << endl;
+void ColaCancionesDAOImpl::actualizar(ColaCanciones cc)
+{
+    QSqlQuery query;
+    query.prepare("UPDATE cola_canciones SET orden = :orden, reproducida = :reproducida WHERE id_cola = :id_cola AND id_cancion = :id_cancion");
+    query.bindValue(":orden", cc.getOrden());
+    query.bindValue(":reproducida", cc.getReproducida());
+    query.bindValue(":id_cola", cc.getIdCola());
+    query.bindValue(":id_cancion", cc.getIdCancion());
+
+    if (!query.exec())
+    {
+        qDebug() << "Error al actualizar ColaCanciones:" << query.lastError().text();
+    }
 }
 
-void ColaCancionesDAOImpl::eliminar(ColaCanciones cc) {
-    // Si el usuario remueve una cancion manual de la lista de espera
-    cout << "[BD] Removiendo cancion ID " << cc.getIdCancion() 
-         << " de la cola ID " << cc.getIdCola() << endl;
+void ColaCancionesDAOImpl::eliminar(ColaCanciones cc)
+{
+    QSqlQuery query;
+    query.prepare("DELETE FROM cola_canciones WHERE id_cola = :id_cola AND id_cancion = :id_cancion");
+    query.bindValue(":id_cola", cc.getIdCola());
+    query.bindValue(":id_cancion", cc.getIdCancion());
+
+    if (!query.exec())
+    {
+        qDebug() << "Error al eliminar ColaCanciones:" << query.lastError().text();
+    }
 }

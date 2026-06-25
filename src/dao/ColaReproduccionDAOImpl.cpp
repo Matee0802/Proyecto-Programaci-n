@@ -1,21 +1,42 @@
 #include "dao/ColaReproduccionDAOImpl.h"
 #include "database/Conexion.h"
-#include <iostream>
+#include <QtSql/QSqlQuery>
+#include <QtSql/QSqlError>
+#include <QDebug>
 
-using namespace std;
+void ColaReproduccionDAOImpl::insertar(ColaReproduccion cr)
+{
+    QSqlQuery query;
+    query.prepare("INSERT INTO cola_reproduccion (id_usuario) VALUES (:id_usuario)");
+    query.bindValue(":id_usuario", cr.getIdUsuario());
 
-// Implementacion de los metodos de la clase ColaReproduccionDAOImpl
-void ColaReproduccionDAOImpl::insertar(ColaReproduccion cr) {
-    // Crea la fila principal asignada al usuario
-    cout << "Creando nueva cola de reproduccion para el usuario ID: " << cr.getIdUsuario() << endl;
+    if (!query.exec())
+    {
+        qDebug() << "Error al insertar ColaReproduccion:" << query.lastError().text();
+    }
 }
 
-void ColaReproduccionDAOImpl::actualizar(ColaReproduccion cr) {
-    // Por si se reasigna o cambia la configuracion de la cola
-    cout << "Actualizando cola de reproduccion ID: " << cr.getIdCola() << endl;
+void ColaReproduccionDAOImpl::actualizar(ColaReproduccion cr)
+{
+    QSqlQuery query;
+    query.prepare("UPDATE cola_reproduccion SET id_usuario = :id_usuario WHERE id_cola = :id_cola");
+    query.bindValue(":id_usuario", cr.getIdUsuario());
+    query.bindValue(":id_cola", cr.getIdCola());
+
+    if (!query.exec())
+    {
+        qDebug() << "Error al actualizar ColaReproduccion:" << query.lastError().text();
+    }
 }
 
-void ColaReproduccionDAOImpl::eliminar(ColaReproduccion cr) {
-    // Si se limpia o elimina la sesion de la cola activa
-    cout << "[BD] Eliminando por completo la cola de reproduccion ID: " << cr.getIdCola() << endl;
+void ColaReproduccionDAOImpl::eliminar(ColaReproduccion cr)
+{
+    QSqlQuery query;
+    query.prepare("DELETE FROM cola_reproduccion WHERE id_cola = :id_cola");
+    query.bindValue(":id_cola", cr.getIdCola());
+
+    if (!query.exec())
+    {
+        qDebug() << "Error al eliminar ColaReproduccion:" << query.lastError().text();
+    }
 }
