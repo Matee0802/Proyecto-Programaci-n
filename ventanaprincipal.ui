@@ -17,12 +17,51 @@
    <widget class="QTableView" name="tablaCanciones">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>20</y>
-      <width>760</width>
-      <height>510</height>
+      <x>-10</x>
+      <y>0</y>
+      <width>1021</width>
+      <height>631</height>
      </rect>
     </property>
+   </widget>
+   <widget class="QFrame" name="frameReproductor">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>600</y>
+      <width>800</width>
+      <height>100</height>
+     </rect>
+    </property>
+    <property name="visible">
+     <bool>false</bool>
+    </property>
+    <widget class="QLabel" name="lblNombreCancion">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>35</y>
+       <width>500</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>No hay canción seleccionada</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btnPausar">
+     <property name="geometry">
+      <rect>
+       <x>650</x>
+       <y>35</y>
+       <width>100</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Pausar</string>
+     </property>
+    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">

@@ -1,11 +1,11 @@
 #include "ventanaprincipal.h"
 #include "ui_ventanaprincipal.h"
-#include "database/Conexion.h"
-#include <QtSql/QSqlQueryModel>
+#include "../../include/database/conexion.h"
 #include <QtSql/QSqlTableModel>
 #include <QtSql/QSqlError>
 #include <QMessageBox>
 #include <QDebug>
+#include <QPropertyAnimation>
 
 VentanaPrincipal::VentanaPrincipal(QWidget *parent)
     : QMainWindow(parent)
@@ -13,89 +13,75 @@ VentanaPrincipal::VentanaPrincipal(QWidget *parent)
 {
     ui->setupUi(this);
 
-    // 1. Instanciamos la clase de conexión para abrir MySQL
-    Conexion bd;
-    if (bd.conectar())
-    {
-        qDebug() << "Conexión exitosa con MySQL. Cargando grilla de canciones...";
+    // Intentamos conectar usando el miembro de la clase 'bd'
+    if (bd.conectar()) {
+        qDebug() << "Conexión exitosa. Cargando grilla de canciones...";
 
-        // 2. Creamos el modelo de consulta de Qt
+        // Creamos el modelo usando la conexión abierta de 'bd'
         QSqlTableModel *modelo = new QSqlTableModel(this, bd.getDB());
-        // (Le pasamos bd.getDB() para que el modelo sepa qué conexión ODBC usar)
 
-        // Ejecutamos el SELECT directo para la vista del usuario
-        // 1. Hacemos la consulta limpia sin los "AS"
-        // 1. Volvemos al método nativo: le pasamos la tabla completa
         modelo->setTable("canciones");
+        modelo->select(); // Cargamos los datos
 
-        // 2. Cargamos los datos reales de la base a la memoria
-        modelo->select();
-
-        // 3. Le ponemos los títulos limpios a las primeras tres columnas
+        // Configuramos los encabezados
         modelo->setHeaderData(0, Qt::Horizontal, "ID");
         modelo->setHeaderData(1, Qt::Horizontal, "Título");
         modelo->setHeaderData(2, Qt::Horizontal, "Duración");
 
-        // 4. Conectamos el modelo a la vista (asegurate de que el nombre "tablaCanciones" coincida con tu diseño)
+        // Asignamos el modelo a la tabla
         ui->tablaCanciones->setModel(modelo);
 
-        // 5. (La Magia) Ocultamos las columnas que no nos interesan
-        // Según tu diagrama, la columna 3 es 'id_album' y la 4 es 'ruta_archivo_mp3'
+        // Ocultamos columnas extras
         ui->tablaCanciones->hideColumn(3);
         ui->tablaCanciones->hideColumn(4);
 
-        if (modelo->lastError().isValid())
-        {
-            qDebug() << "Error en la consulta SQL de la interfaz:" << modelo->lastError().text();
+        if (modelo->lastError().isValid()) {
+            qDebug() << "Error SQL:" << modelo->lastError().text();
         }
-        else
-        {
-            // 3. Vinculamos el modelo con tu componente visual de la tabla (tableWidget)
-            ui->tablaCanciones->setModel(modelo);
-        }
-
-        // 4. Cerramos la conexión una vez cargados los datos
-        bd.desconectar();
-    }
-    else
-    {
-        QMessageBox::critical(this, "Error de Base de Datos", "No se pudo conectar a MySQL para sincronizar el catálogo.");
+    } else {
+        QMessageBox::critical(this, "Error", "No se pudo conectar a MySQL. Revisá la configuración.");
     }
 }
 
 VentanaPrincipal::~VentanaPrincipal()
 {
+    // Al cerrar la ventana, se destruye el objeto 'bd' y se desconecta automáticamente
     delete ui;
 }
 
 void VentanaPrincipal::on_btnProbar_clicked()
 {
-    Conexion bd;
     if (bd.conectar()) {
-        QMessageBox::information(this, "Éxito", "¡Conectado a la base de datos spotcloud perfectamente, pa!");
-        bd.desconectar();
+        QMessageBox::information(this, "Éxito", "¡Conectado a SpotCloud perfectamente!");
     } else {
-        QMessageBox::critical(this, "Error", "No se pudo conectar a MySQL. Revisá XAMPP.");
+        QMessageBox::critical(this, "Error", "No se pudo conectar a MySQL.");
     }
 }
 
 void VentanaPrincipal::on_tablaCanciones_doubleClicked(const QModelIndex &index)
 {
-    // Capturamos la fila seleccionada
+    // 1. Datos
     int fila = index.row();
-
-    // El modelo contiene todos los datos de la consulta.
-    // Usamos .sibling() para movernos a la columna que queremos de esa misma fila.
     QAbstractItemModel *modelo = ui->tablaCanciones->model();
+    QString titulo = modelo->data(modelo->index(fila, 1)).toString();
 
-    // Columna 0 = ID de la canción
-    int idCancion = modelo->data(modelo->index(fila, 0)).toInt();
+    // 2. Actualizar texto
+    ui->lblNombreCancion->setText("Reproduciendo: " + titulo);
 
-    // Columna 1 = Título de la canción
-    QString tituloCancion = modelo->data(modelo->index(fila, 1)).toString();
+    // 3. Preparar el Frame para la animación
+    // Si no es visible, lo posicionamos fuera de la vista (debajo) para que "suba"
+    if (!ui->frameReproductor->isVisible()) {
+        ui->frameReproductor->setGeometry(0, this->height(), this->width(), 100);
+        ui->frameReproductor->setVisible(true);
+    }
 
-    // Por ahora, tiramos un mensaje flotante para comprobar que lee perfecto el clic
-    QMessageBox::information(this, "Reproduciendo", "Seleccionaste la canción: " + tituloCancion + " (ID: " + QString::number(idCancion) + ")");
+    // 4. Crear la animación
+    QPropertyAnimation *animacion = new QPropertyAnimation(ui->frameReproductor, "geometry");
+    animacion->setDuration(400); // 400ms para que sea suave
+    animacion->setStartValue(ui->frameReproductor->geometry());
+    // Posición final: parte inferior de la ventana
+    animacion->setEndValue(QRect(0, this->height() - 100, this->width(), 100));
+    animacion->setEasingCurve(QEasingCurve::OutCubic); // Curva estética
 
-    // TODO: Acá es donde más adelante llamaremos al reproductor de audio pasando el id o la url
+    animacion->start(QAbstractAnimation::DeleteWhenStopped);
 }

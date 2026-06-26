@@ -2,7 +2,7 @@
 #define VENTANAPRINCIPAL_H
 
 #include <QMainWindow>
-
+#include "database/Conexion.h"
 namespace Ui {
 class VentanaPrincipal;
 }
@@ -17,6 +17,7 @@ public:
 
 private:
     Ui::VentanaPrincipal *ui;
+    Conexion bd;
 
     // --- AGREGÁ ESTO ACÁ ABAJO ---
 private slots:
