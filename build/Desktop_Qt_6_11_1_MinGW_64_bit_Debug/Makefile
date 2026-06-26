@@ -308,8 +308,10 @@ Makefile: ../../SpotCloud.pro C:/QT/6.11.1/mingw_64/mkspecs/win32-g++/qmake.conf
 		C:/QT/6.11.1/mingw_64/mkspecs/features/lex.prf \
 		../../SpotCloud.pro \
 		C:/QT/6.11.1/mingw_64/lib/Qt6Widgets.prl \
+		C:/QT/6.11.1/mingw_64/lib/Qt6Multimedia.prl \
 		C:/QT/6.11.1/mingw_64/lib/Qt6Gui.prl \
 		C:/QT/6.11.1/mingw_64/lib/Qt6Sql.prl \
+		C:/QT/6.11.1/mingw_64/lib/Qt6Network.prl \
 		C:/QT/6.11.1/mingw_64/lib/Qt6Core.prl \
 		C:/QT/6.11.1/mingw_64/lib/Qt6EntryPoint.prl \
 		C:/QT/6.11.1/mingw_64/mkspecs/features/build_pass.prf
@@ -552,8 +554,10 @@ C:/QT/6.11.1/mingw_64/mkspecs/features/yacc.prf:
 C:/QT/6.11.1/mingw_64/mkspecs/features/lex.prf:
 ../../SpotCloud.pro:
 C:/QT/6.11.1/mingw_64/lib/Qt6Widgets.prl:
+C:/QT/6.11.1/mingw_64/lib/Qt6Multimedia.prl:
 C:/QT/6.11.1/mingw_64/lib/Qt6Gui.prl:
 C:/QT/6.11.1/mingw_64/lib/Qt6Sql.prl:
+C:/QT/6.11.1/mingw_64/lib/Qt6Network.prl:
 C:/QT/6.11.1/mingw_64/lib/Qt6Core.prl:
 C:/QT/6.11.1/mingw_64/lib/Qt6EntryPoint.prl:
 C:/QT/6.11.1/mingw_64/mkspecs/features/build_pass.prf:

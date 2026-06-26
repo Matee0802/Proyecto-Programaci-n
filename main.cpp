@@ -9,16 +9,24 @@ int main(int argc, char *argv[])
     QString estilo = R"(
         QMainWindow { background-color: #121212; }
         QTableView {
-            background-color: #181818;
-            color: white;
-            alternate-background-color: #282828;
-            border: none;
+        background-color: #121212;
+        border: none; /* Adiós borde de tabla */
+        gridline-color: transparent; /* Adiós líneas divisorias */
         }
+
+        /* Encabezado elegante */
         QHeaderView::section {
-            background-color: #282828;
-            color: #FFD700; /* Ese amarillo icónico de tu presentación */
-            padding: 5px;
-            border: none;
+        background-color: #121212;
+        color: #FFD700; /* Tu amarillo */
+        border: none;
+        font-weight: bold;
+        padding: 10px;
+        }
+
+     /* Selección amarilla */
+        QTableView::item:selected {
+        background-color: #FFD700;
+        color: #000000;
         }
         QPushButton {
             background-color: #FFD700;

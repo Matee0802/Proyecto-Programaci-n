@@ -6,70 +6,124 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>1011</width>
+    <height>631</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>SpotCloud - Catálogo de Música</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QTableView" name="tablaCanciones">
-    <property name="geometry">
-     <rect>
-      <x>-10</x>
-      <y>0</y>
-      <width>1021</width>
-      <height>631</height>
-     </rect>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <property name="spacing">
+     <number>0</number>
     </property>
-   </widget>
-   <widget class="QFrame" name="frameReproductor">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>600</y>
-      <width>800</width>
-      <height>100</height>
-     </rect>
+    <property name="leftMargin">
+     <number>0</number>
     </property>
-    <property name="visible">
-     <bool>false</bool>
+    <property name="topMargin">
+     <number>0</number>
     </property>
-    <widget class="QLabel" name="lblNombreCancion">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>35</y>
-       <width>500</width>
-       <height>30</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>No hay canción seleccionada</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="btnPausar">
-     <property name="geometry">
-      <rect>
-       <x>650</x>
-       <y>35</y>
-       <width>100</width>
-       <height>30</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Pausar</string>
-     </property>
-    </widget>
-   </widget>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
+    <item>
+     <widget class="QTableView" name="tablaCanciones">
+      <property name="frameShape">
+       <enum>QFrame::Shape::NoFrame</enum>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QFrame" name="frameReproductor">
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>80</height>
+       </size>
+      </property>
+      <property name="visible">
+       <bool>false</bool>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: #181818;</string>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <property name="leftMargin">
+        <number>20</number>
+       </property>
+       <property name="rightMargin">
+        <number>20</number>
+       </property>
+       <item>
+        <widget class="QLabel" name="lblNombreCancion">
+         <property name="styleSheet">
+          <string notr="true">color: white; font-weight: bold; font-size: 14px;</string>
+         </property>
+         <property name="text">
+          <string>No hay canción seleccionada</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Orientation::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="btnPausar">
+         <property name="minimumSize">
+          <size>
+           <width>100</width>
+           <height>35</height>
+          </size>
+         </property>
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: #FFD700; color: black; font-weight: bold; border-radius: 17px;</string>
+         </property>
+         <property name="text">
+          <string>Pausar</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+      <widget class="QSlider" name="sliderProgreso">
+       <property name="geometry">
+        <rect>
+         <x>300</x>
+         <y>20</y>
+         <width>400</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Orientation::Horizontal</enum>
+       </property>
+      </widget>
+     </widget>
+    </item>
+   </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>1011</width>
      <height>21</height>
     </rect>
    </property>

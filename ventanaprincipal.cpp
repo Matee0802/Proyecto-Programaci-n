@@ -12,6 +12,54 @@ VentanaPrincipal::VentanaPrincipal(QWidget *parent)
     , ui(new Ui::VentanaPrincipal)
 {
     ui->setupUi(this);
+    // 1. Pintar el fondo de toda la ventana de oscuro
+    this->setStyleSheet("QMainWindow { background-color: #121212; }");
+
+    // 2. Obligar a las columnas a estirarse y ocupar todo el ancho
+    ui->tablaCanciones->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+
+    // 3. Ocultar los números de fila de la izquierda (1, 2, 3, 4...)
+    ui->tablaCanciones->verticalHeader()->setVisible(false);
+
+    // 4. Quitar las líneas divisorias (grilla)
+    ui->tablaCanciones->setShowGrid(false);
+
+    // 5. Aplicar el diseño "SpotCloud" a la tabla
+    ui->tablaCanciones->setStyleSheet(
+        "QTableView { background-color: #121212; color: #b3b3b3; border: none; }"
+        "QHeaderView::section { background-color: #181818; color: #FFD700; font-weight: bold; border: none; padding: 5px; }"
+        "QTableView::item:selected { background-color: #FFD700; color: black; }"
+        );
+        ui->sliderProgreso->setStyleSheet(
+        "QSlider::groove:horizontal { border: none; height: 4px; background: #333; margin: 2px 0; border-radius: 2px; }"
+        "QSlider::handle:horizontal { background: #FFD700; width: 12px; height: 12px; border-radius: 6px; margin: -4px 0; }"
+        "QSlider::sub-page:horizontal { background: #FFD700; border-radius: 2px; }"
+        );
+        ui->frameReproductor->setMaximumHeight(0);
+
+    // Inicializar audio
+    reproductor = new QMediaPlayer(this);
+    salidaAudio = new QAudioOutput(this);
+
+    reproductor->setAudioOutput(salidaAudio);
+    salidaAudio->setVolume(0.5);
+
+    // En tu constructor, junto a las otras configuraciones de la tabla:
+    ui->tablaCanciones->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    // 1. Cuando el reproductor avanza, actualiza el slider
+    connect(reproductor, &QMediaPlayer::positionChanged, this, [this](qint64 posicion){
+        ui->sliderProgreso->setMaximum(reproductor->duration());
+        ui->sliderProgreso->setValue(posicion);
+    });
+
+    // 2. Cuando el usuario mueve el slider, el reproductor salta a ese tiempo
+    connect(ui->sliderProgreso, &QSlider::sliderMoved, this, [this](int posicion){
+        reproductor->setPosition(posicion);
+    });
+    // Esto hace que el slider sea más "suave" al moverlo
+    ui->sliderProgreso->setTracking(true);
+
+
 
     // Intentamos conectar usando el miembro de la clase 'bd'
     if (bd.conectar()) {
@@ -57,31 +105,46 @@ void VentanaPrincipal::on_btnProbar_clicked()
         QMessageBox::critical(this, "Error", "No se pudo conectar a MySQL.");
     }
 }
-
 void VentanaPrincipal::on_tablaCanciones_doubleClicked(const QModelIndex &index)
 {
-    // 1. Datos
-    int fila = index.row();
+    // 1. Obtener el nombre de la canción
     QAbstractItemModel *modelo = ui->tablaCanciones->model();
-    QString titulo = modelo->data(modelo->index(fila, 1)).toString();
+    QString nombreCancion = modelo->data(modelo->index(index.row(), 1)).toString();
+    ui->lblNombreCancion->setText(nombreCancion);
 
-    // 2. Actualizar texto
-    ui->lblNombreCancion->setText("Reproduciendo: " + titulo);
+    // 2. Definir la ruta (USAMOS LA RUTA FIJA PARA PROBAR SI SUENA)
+    // Cuando esto funcione, después lo cambiamos a la ruta automática.
+    QString ruta = "C:/Users/olive/Desktop/Mateo/Proyecto Programacion/Proyecto-Programaci-n/musica/pray_for_plagues.mp3";
 
-    // 3. Preparar el Frame para la animación
-    // Si no es visible, lo posicionamos fuera de la vista (debajo) para que "suba"
-    if (!ui->frameReproductor->isVisible()) {
-        ui->frameReproductor->setGeometry(0, this->height(), this->width(), 100);
+    qDebug() << "Intentando reproducir:" << ruta;
+
+    // 3. Configurar y reproducir
+    reproductor->setSource(QUrl::fromLocalFile(ruta));
+    reproductor->play();
+
+    // 4. Animación de apertura
+    if (ui->frameReproductor->maximumHeight() == 0) {
         ui->frameReproductor->setVisible(true);
+        QPropertyAnimation *animacion = new QPropertyAnimation(ui->frameReproductor, "maximumHeight");
+        animacion->setDuration(350);
+        animacion->setStartValue(0);
+        animacion->setEndValue(80);
+        animacion->setEasingCurve(QEasingCurve::OutCubic);
+        animacion->start(QPropertyAnimation::DeleteWhenStopped);
     }
+}
 
-    // 4. Crear la animación
-    QPropertyAnimation *animacion = new QPropertyAnimation(ui->frameReproductor, "geometry");
-    animacion->setDuration(400); // 400ms para que sea suave
-    animacion->setStartValue(ui->frameReproductor->geometry());
-    // Posición final: parte inferior de la ventana
-    animacion->setEndValue(QRect(0, this->height() - 100, this->width(), 100));
-    animacion->setEasingCurve(QEasingCurve::OutCubic); // Curva estética
+void VentanaPrincipal::actualizarProgreso(qint64 posicion)
+{
+    // El slider debe tener el rango de la duración total de la canción
+    ui->sliderProgreso->setMaximum(reproductor->duration());
+    ui->sliderProgreso->setValue(posicion);
 
-    animacion->start(QAbstractAnimation::DeleteWhenStopped);
+    // Opcional: mostrar tiempo en labels (ej: lblTiempoActual y lblTiempoTotal)
+    // ui->lblTiempoActual->setText(formatearTiempo(posicion));
+}
+
+void VentanaPrincipal::cambiarPosicion(int posicion)
+{
+    reproductor->setPosition(posicion);
 }
