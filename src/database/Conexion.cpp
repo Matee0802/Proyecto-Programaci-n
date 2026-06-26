@@ -1,36 +1,39 @@
-#include "database/Conexion.h"
+#include "../../include/database/conexion.h"
+#include <QSqlError>
 #include <QDebug>
 
-Conexion::Conexion() {
-    // Configuramos los datos de tu base de datos de XAMPP usando Qt
-    host = "127.0.0.1";
-    user = "root";
-    pass = "";
-    databaseName = "spotcloud";
-    puerto = 3306;
-
-    // Inicializamos el driver de MySQL nativo de Qt
-    db = QSqlDatabase::addDatabase("QMYSQL");
-    db.setHostName(host);
-    db.setUserName(user);
-    db.setPassword(pass);
-    db.setDatabaseName(databaseName);
-    db.setPort(puerto);
+Conexion::Conexion(){
+    // Configuramos Qt para usar ODBC en lugar del nativo de MySQL
+    db = QSqlDatabase::addDatabase("QODBC");
 }
 
-bool Conexion::conectar() {
-    if (db.open()) {
-        qDebug() << "¡Conectado a la base de datos SpotCloud perfectamente!";
-        return true;
-    } else {
-        qDebug() << "Error al conectar a la base de datos:" << db.lastError().text();
+bool Conexion::conectar(){
+    // ¡OJO! Acá cambiamos "autogest" por "spotcloud"
+    db.setDatabaseName(
+        "Driver={MySQL ODBC 9.7 Unicode Driver};"
+        "Server=127.0.0.1;"
+        "Database=spotcloud;"
+        "User=root;"
+        "Password=;"
+        );
+
+    if (!db.open()){
+        qDebug() << "Error al conectar por ODBC:";
+        qDebug() << db.lastError().text();
         return false;
     }
+
+    qDebug() << "¡Conexión exitosa a SpotCloud via ODBC!";
+    return true;
 }
 
-void Conexion::desconectar() {
-    if (db.isOpen()) {
+QSqlDatabase Conexion::getDB(){
+    return db;
+}
+
+void Conexion::desconectar()
+{
+    if (db.isOpen()){
         db.close();
-        qDebug() << "Base de datos desconectada.";
     }
 }

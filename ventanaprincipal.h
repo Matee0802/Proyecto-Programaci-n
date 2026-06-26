@@ -21,6 +21,9 @@ private:
     // --- AGREGÁ ESTO ACÁ ABAJO ---
 private slots:
     void on_btnProbar_clicked();
+
+    // Agregá esta línea acá abajo:
+    void on_tablaCanciones_doubleClicked(const QModelIndex &index);
 };
 
 #endif // VENTANAPRINCIPAL_H

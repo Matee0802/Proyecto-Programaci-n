@@ -914,31 +914,33 @@ release/CancionDAOImpl.o: ../../src/dao/CancionDAOImpl.cpp ../../include/dao/Can
 		../../include/dao/CancionDAO.h \
 		../../include/database/DAO.h \
 		../../include/models/Cancion.h \
-		../../include/database/Conexion.h \
-		C:/QT/6.11.1/mingw_64/include/QtSql/QSqlDatabase \
-		C:/QT/6.11.1/mingw_64/include/QtSql/qsqldatabase.h \
-		C:/QT/6.11.1/mingw_64/include/QtSql/qtsqlglobal.h \
-		C:/QT/6.11.1/mingw_64/include/QtCore/qglobal.h \
-		C:/QT/6.11.1/mingw_64/include/QtCore/qtcoreglobal.h \
-		C:/QT/6.11.1/mingw_64/include/QtCore/qtversionchecks.h \
+		C:/QT/6.11.1/mingw_64/include/QtCore/QList \
+		C:/QT/6.11.1/mingw_64/include/QtCore/qlist.h \
+		C:/QT/6.11.1/mingw_64/include/QtCore/qarraydatapointer.h \
+		C:/QT/6.11.1/mingw_64/include/QtCore/qarraydataops.h \
+		C:/QT/6.11.1/mingw_64/include/QtCore/qarraydata.h \
+		C:/QT/6.11.1/mingw_64/include/QtCore/qpair.h \
+		C:/QT/6.11.1/mingw_64/include/QtCore/qcontainerfwd.h \
+		C:/QT/6.11.1/mingw_64/include/QtCore/qtconfigmacros.h \
 		C:/QT/6.11.1/mingw_64/include/QtCore/qtconfiginclude.h \
 		C:/QT/6.11.1/mingw_64/include/QtCore/qconfig.h \
 		C:/QT/6.11.1/mingw_64/include/QtCore/qtcore-config.h \
-		C:/QT/6.11.1/mingw_64/include/QtCore/qtconfigmacros.h \
 		C:/QT/6.11.1/mingw_64/include/QtCore/qtdeprecationdefinitions.h \
 		C:/QT/6.11.1/mingw_64/include/QtCore/qcompilerdetection.h \
 		C:/QT/6.11.1/mingw_64/include/QtCore/qprocessordetection.h \
 		C:/QT/6.11.1/mingw_64/include/QtCore/qsystemdetection.h \
+		C:/QT/6.11.1/mingw_64/include/QtCore/qtversionchecks.h \
+		C:/QT/6.11.1/mingw_64/include/QtCore/qtypes.h \
+		C:/QT/6.11.1/mingw_64/include/QtCore/qassert.h \
 		C:/QT/6.11.1/mingw_64/include/QtCore/qtcoreexports.h \
 		C:/QT/6.11.1/mingw_64/include/QtCore/qtdeprecationmarkers.h \
 		C:/QT/6.11.1/mingw_64/include/QtCore/qtclasshelpermacros.h \
-		C:/QT/6.11.1/mingw_64/include/QtCore/qtpreprocessorsupport.h \
-		C:/QT/6.11.1/mingw_64/include/QtCore/qassert.h \
 		C:/QT/6.11.1/mingw_64/include/QtCore/qtnoop.h \
-		C:/QT/6.11.1/mingw_64/include/QtCore/qtypes.h \
+		C:/QT/6.11.1/mingw_64/include/QtCore/qglobal.h \
+		C:/QT/6.11.1/mingw_64/include/QtCore/qtcoreglobal.h \
+		C:/QT/6.11.1/mingw_64/include/QtCore/qtpreprocessorsupport.h \
 		C:/QT/6.11.1/mingw_64/include/QtCore/qtversion.h \
 		C:/QT/6.11.1/mingw_64/include/QtCore/qtypeinfo.h \
-		C:/QT/6.11.1/mingw_64/include/QtCore/qcontainerfwd.h \
 		C:/QT/6.11.1/mingw_64/include/QtCore/qsysinfo.h \
 		C:/QT/6.11.1/mingw_64/include/QtCore/qlogging.h \
 		C:/QT/6.11.1/mingw_64/include/QtCore/qflags.h \
@@ -965,43 +967,27 @@ release/CancionDAOImpl.o: ../../src/dao/CancionDAOImpl.cpp ../../include/dao/Can
 		C:/QT/6.11.1/mingw_64/include/QtCore/qtresource.h \
 		C:/QT/6.11.1/mingw_64/include/QtCore/qttranslation.h \
 		C:/QT/6.11.1/mingw_64/include/QtCore/qversiontagging.h \
-		C:/QT/6.11.1/mingw_64/include/QtSql/qtsql-config.h \
-		C:/QT/6.11.1/mingw_64/include/QtSql/qtsqlexports.h \
-		C:/QT/6.11.1/mingw_64/include/QtCore/qmetaobject.h \
-		C:/QT/6.11.1/mingw_64/include/QtCore/qobjectdefs.h \
+		C:/QT/6.11.1/mingw_64/include/QtCore/qcontainertools_impl.h \
+		C:/QT/6.11.1/mingw_64/include/QtCore/qxptype_traits.h \
+		C:/QT/6.11.1/mingw_64/include/QtCore/q23type_traits.h \
 		C:/QT/6.11.1/mingw_64/include/QtCore/qnamespace.h \
 		C:/QT/6.11.1/mingw_64/include/QtCore/qcompare.h \
 		C:/QT/6.11.1/mingw_64/include/QtCore/qstdlibdetection.h \
 		C:/QT/6.11.1/mingw_64/include/QtCore/qcomparehelpers.h \
 		C:/QT/6.11.1/mingw_64/include/QtCore/qtmetamacros.h \
-		C:/QT/6.11.1/mingw_64/include/QtCore/qobjectdefs_impl.h \
-		C:/QT/6.11.1/mingw_64/include/QtCore/qfunctionaltools_impl.h \
-		C:/QT/6.11.1/mingw_64/include/QtCore/qvariant.h \
-		C:/QT/6.11.1/mingw_64/include/QtCore/qmetatype.h \
-		C:/QT/6.11.1/mingw_64/include/QtCore/qbytearray.h \
-		C:/QT/6.11.1/mingw_64/include/QtCore/qrefcount.h \
-		C:/QT/6.11.1/mingw_64/include/QtCore/qarraydata.h \
-		C:/QT/6.11.1/mingw_64/include/QtCore/qpair.h \
-		C:/QT/6.11.1/mingw_64/include/QtCore/qarraydatapointer.h \
-		C:/QT/6.11.1/mingw_64/include/QtCore/qarraydataops.h \
-		C:/QT/6.11.1/mingw_64/include/QtCore/qcontainertools_impl.h \
-		C:/QT/6.11.1/mingw_64/include/QtCore/qxptype_traits.h \
-		C:/QT/6.11.1/mingw_64/include/QtCore/q23type_traits.h \
 		C:/QT/6.11.1/mingw_64/include/QtCore/q20functional.h \
 		C:/QT/6.11.1/mingw_64/include/QtCore/q20memory.h \
 		C:/QT/6.11.1/mingw_64/include/QtCore/q17memory.h \
+		C:/QT/6.11.1/mingw_64/include/QtCore/qhashfunctions.h \
+		C:/QT/6.11.1/mingw_64/include/QtCore/qstring.h \
+		C:/QT/6.11.1/mingw_64/include/QtCore/qchar.h \
+		C:/QT/6.11.1/mingw_64/include/QtCore/qstringview.h \
+		C:/QT/6.11.1/mingw_64/include/QtCore/qbytearray.h \
+		C:/QT/6.11.1/mingw_64/include/QtCore/qrefcount.h \
 		C:/QT/6.11.1/mingw_64/include/QtCore/qbytearrayalgorithms.h \
 		C:/QT/6.11.1/mingw_64/include/QtCore/qbytearrayview.h \
 		C:/QT/6.11.1/mingw_64/include/QtCore/qstringfwd.h \
-		C:/QT/6.11.1/mingw_64/include/QtCore/qdatastream.h \
-		C:/QT/6.11.1/mingw_64/include/QtCore/qchar.h \
-		C:/QT/6.11.1/mingw_64/include/QtCore/qstringview.h \
 		C:/QT/6.11.1/mingw_64/include/QtCore/qstringalgorithms.h \
-		C:/QT/6.11.1/mingw_64/include/QtCore/qiodevicebase.h \
-		C:/QT/6.11.1/mingw_64/include/QtCore/qscopedpointer.h \
-		C:/QT/6.11.1/mingw_64/include/QtCore/qfloat16.h \
-		C:/QT/6.11.1/mingw_64/include/QtCore/qhashfunctions.h \
-		C:/QT/6.11.1/mingw_64/include/QtCore/qstring.h \
 		C:/QT/6.11.1/mingw_64/include/QtCore/qlatin1stringview.h \
 		C:/QT/6.11.1/mingw_64/include/QtCore/qanystringview.h \
 		C:/QT/6.11.1/mingw_64/include/QtCore/qutf8stringview.h \
@@ -1009,10 +995,30 @@ release/CancionDAOImpl.o: ../../src/dao/CancionDAOImpl.cpp ../../include/dao/Can
 		C:/QT/6.11.1/mingw_64/include/QtCore/qstringbuilder.h \
 		C:/QT/6.11.1/mingw_64/include/QtCore/qstringconverter.h \
 		C:/QT/6.11.1/mingw_64/include/QtCore/qstringconverter_base.h \
-		C:/QT/6.11.1/mingw_64/include/QtCore/qmath.h \
+		C:/QT/6.11.1/mingw_64/include/QtCore/qiterator.h \
+		C:/QT/6.11.1/mingw_64/include/QtCore/qbytearraylist.h \
+		C:/QT/6.11.1/mingw_64/include/QtCore/qstringlist.h \
 		C:/QT/6.11.1/mingw_64/include/QtCore/qalgorithms.h \
 		C:/QT/6.11.1/mingw_64/include/QtCore/q20bit.h \
 		C:/QT/6.11.1/mingw_64/include/QtCore/qsimd.h \
+		C:/QT/6.11.1/mingw_64/include/QtCore/qstringmatcher.h \
+		../../include/database/Conexion.h \
+		C:/QT/6.11.1/mingw_64/include/QtSql/QSqlDatabase \
+		C:/QT/6.11.1/mingw_64/include/QtSql/qsqldatabase.h \
+		C:/QT/6.11.1/mingw_64/include/QtSql/qtsqlglobal.h \
+		C:/QT/6.11.1/mingw_64/include/QtSql/qtsql-config.h \
+		C:/QT/6.11.1/mingw_64/include/QtSql/qtsqlexports.h \
+		C:/QT/6.11.1/mingw_64/include/QtCore/qmetaobject.h \
+		C:/QT/6.11.1/mingw_64/include/QtCore/qobjectdefs.h \
+		C:/QT/6.11.1/mingw_64/include/QtCore/qobjectdefs_impl.h \
+		C:/QT/6.11.1/mingw_64/include/QtCore/qfunctionaltools_impl.h \
+		C:/QT/6.11.1/mingw_64/include/QtCore/qvariant.h \
+		C:/QT/6.11.1/mingw_64/include/QtCore/qmetatype.h \
+		C:/QT/6.11.1/mingw_64/include/QtCore/qdatastream.h \
+		C:/QT/6.11.1/mingw_64/include/QtCore/qiodevicebase.h \
+		C:/QT/6.11.1/mingw_64/include/QtCore/qscopedpointer.h \
+		C:/QT/6.11.1/mingw_64/include/QtCore/qfloat16.h \
+		C:/QT/6.11.1/mingw_64/include/QtCore/qmath.h \
 		C:/QT/6.11.1/mingw_64/include/QtCore/qtformat_impl.h \
 		C:/QT/6.11.1/mingw_64/include/QtCore/qiterable.h \
 		C:/QT/6.11.1/mingw_64/include/QtCore/qtaggedpointer.h \
@@ -1025,11 +1031,6 @@ release/CancionDAOImpl.o: ../../src/dao/CancionDAOImpl.cpp ../../include/dao/Can
 		C:/QT/6.11.1/mingw_64/include/QtCore/qsharedpointer.h \
 		C:/QT/6.11.1/mingw_64/include/QtCore/qshareddata.h \
 		C:/QT/6.11.1/mingw_64/include/QtCore/qsharedpointer_impl.h \
-		C:/QT/6.11.1/mingw_64/include/QtCore/qlist.h \
-		C:/QT/6.11.1/mingw_64/include/QtCore/qiterator.h \
-		C:/QT/6.11.1/mingw_64/include/QtCore/qbytearraylist.h \
-		C:/QT/6.11.1/mingw_64/include/QtCore/qstringlist.h \
-		C:/QT/6.11.1/mingw_64/include/QtCore/qstringmatcher.h \
 		C:/QT/6.11.1/mingw_64/include/QtCore/qmap.h \
 		C:/QT/6.11.1/mingw_64/include/QtCore/qshareddata_impl.h \
 		C:/QT/6.11.1/mingw_64/include/QtCore/qset.h \
@@ -2154,10 +2155,14 @@ release/ventanaprincipal.o: ../../ventanaprincipal.cpp ../../ventanaprincipal.h 
 		C:/QT/6.11.1/mingw_64/include/QtSql/QSqlError \
 		C:/QT/6.11.1/mingw_64/include/QtSql/qsqlerror.h \
 		C:/QT/6.11.1/mingw_64/include/QtCore/QString \
+		C:/QT/6.11.1/mingw_64/include/QtSql/QSqlQueryModel \
+		C:/QT/6.11.1/mingw_64/include/QtSql/qsqlquerymodel.h \
+		C:/QT/6.11.1/mingw_64/include/QtCore/qabstractitemmodel.h \
 		C:/QT/6.11.1/mingw_64/include/QtWidgets/QMessageBox \
 		C:/QT/6.11.1/mingw_64/include/QtWidgets/qmessagebox.h \
 		C:/QT/6.11.1/mingw_64/include/QtWidgets/qdialog.h \
-		C:/QT/6.11.1/mingw_64/include/QtWidgets/qdialogbuttonbox.h
+		C:/QT/6.11.1/mingw_64/include/QtWidgets/qdialogbuttonbox.h \
+		C:/QT/6.11.1/mingw_64/include/QtCore/QDebug
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\ventanaprincipal.o ..\..\ventanaprincipal.cpp
 
 release/moc_ventanaprincipal.o: release/moc_ventanaprincipal.cpp 

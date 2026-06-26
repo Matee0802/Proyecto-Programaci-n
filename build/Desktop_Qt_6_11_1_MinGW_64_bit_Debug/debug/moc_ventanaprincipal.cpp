@@ -40,12 +40,19 @@ template <> constexpr inline auto VentanaPrincipal::qt_create_metaobjectdata<qt_
     QtMocHelpers::StringRefStorage qt_stringData {
         "VentanaPrincipal",
         "on_btnProbar_clicked",
-        ""
+        "",
+        "on_tablaCanciones_doubleClicked",
+        "QModelIndex",
+        "index"
     };
 
     QtMocHelpers::UintData qt_methods {
         // Slot 'on_btnProbar_clicked'
         QtMocHelpers::SlotData<void()>(1, 2, QMC::AccessPrivate, QMetaType::Void),
+        // Slot 'on_tablaCanciones_doubleClicked'
+        QtMocHelpers::SlotData<void(const QModelIndex &)>(3, 2, QMC::AccessPrivate, QMetaType::Void, {{
+            { 0x80000000 | 4, 5 },
+        }}),
     };
     QtMocHelpers::UintData qt_properties {
     };
@@ -70,10 +77,10 @@ void VentanaPrincipal::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
         case 0: _t->on_btnProbar_clicked(); break;
+        case 1: _t->on_tablaCanciones_doubleClicked((*reinterpret_cast<std::add_pointer_t<QModelIndex>>(_a[1]))); break;
         default: ;
         }
     }
-    (void)_a;
 }
 
 const QMetaObject *VentanaPrincipal::metaObject() const
@@ -95,14 +102,14 @@ int VentanaPrincipal::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 1)
+        if (_id < 2)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 1;
+        _id -= 2;
     }
     if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 1)
+        if (_id < 2)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 1;
+        _id -= 2;
     }
     return _id;
 }

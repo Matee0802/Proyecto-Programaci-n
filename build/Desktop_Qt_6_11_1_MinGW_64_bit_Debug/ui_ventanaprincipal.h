@@ -11,9 +11,11 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QHeaderView>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QStatusBar>
+#include <QtWidgets/QTableView>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -22,6 +24,7 @@ class Ui_VentanaPrincipal
 {
 public:
     QWidget *centralwidget;
+    QTableView *tablaCanciones;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -32,6 +35,9 @@ public:
         VentanaPrincipal->resize(800, 600);
         centralwidget = new QWidget(VentanaPrincipal);
         centralwidget->setObjectName("centralwidget");
+        tablaCanciones = new QTableView(centralwidget);
+        tablaCanciones->setObjectName("tablaCanciones");
+        tablaCanciones->setGeometry(QRect(20, 20, 760, 510));
         VentanaPrincipal->setCentralWidget(centralwidget);
         menubar = new QMenuBar(VentanaPrincipal);
         menubar->setObjectName("menubar");
@@ -48,7 +54,7 @@ public:
 
     void retranslateUi(QMainWindow *VentanaPrincipal)
     {
-        VentanaPrincipal->setWindowTitle(QCoreApplication::translate("VentanaPrincipal", "MainWindow", nullptr));
+        VentanaPrincipal->setWindowTitle(QCoreApplication::translate("VentanaPrincipal", "SpotCloud - Cat\303\241logo de M\303\272sica", nullptr));
     } // retranslateUi
 
 };

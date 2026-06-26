@@ -1,7 +1,7 @@
 #ifndef CANCIONDAOIMPL_H
 #define CANCIONDAOIMPL_H
 #include "CancionDAO.h"
-
+#include <QList>
 //Creamos la Clase UsuarioDAOImpl que hereda de UsuarioDAO, que tambien hereda del DAO principal
 //para poder interactuar con la BD
 class CancionDAOImpl : public CancionDAO {
@@ -11,4 +11,7 @@ public:
     void actualizar(Cancion c) override;
     void eliminar(Cancion c) override;
 };
+
+
+
 #endif
