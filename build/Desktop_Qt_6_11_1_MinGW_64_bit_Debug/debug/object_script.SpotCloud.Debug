@@ -17,4 +17,5 @@ debug/Historial.o
 debug/Usuario.o
 debug/UsuarioArtista.o
 debug/ventanaprincipal.o
+debug/qrc_recursos.o
 debug/moc_ventanaprincipal.o

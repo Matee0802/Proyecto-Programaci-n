@@ -17,4 +17,5 @@ release/Historial.o
 release/Usuario.o
 release/UsuarioArtista.o
 release/ventanaprincipal.o
+release/qrc_recursos.o
 release/moc_ventanaprincipal.o

@@ -64,3 +64,5 @@ SOURCES += main.cpp \
            ventanaprincipal.cpp
 
 FORMS += ventanaprincipal.ui
+
+RESOURCES += recursos.qrc

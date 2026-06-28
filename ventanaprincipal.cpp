@@ -6,123 +6,122 @@
 #include <QMessageBox>
 #include <QDebug>
 #include <QPropertyAnimation>
+#include <QFontDatabase>
+
 
 VentanaPrincipal::VentanaPrincipal(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::VentanaPrincipal)
 {
     ui->setupUi(this);
-    // 1. Pintar el fondo de toda la ventana de oscuro
+
+    // --- CONFIGURACIÓN VISUAL ---
     this->setStyleSheet("QMainWindow { background-color: #121212; }");
-
-    // 2. Obligar a las columnas a estirarse y ocupar todo el ancho
     ui->tablaCanciones->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-
-    // 3. Ocultar los números de fila de la izquierda (1, 2, 3, 4...)
     ui->tablaCanciones->verticalHeader()->setVisible(false);
-
-    // 4. Quitar las líneas divisorias (grilla)
     ui->tablaCanciones->setShowGrid(false);
+    ui->tablaCanciones->setEditTriggers(QAbstractItemView::NoEditTriggers); // Bloquear edición
 
-    // 5. Aplicar el diseño "SpotCloud" a la tabla
     ui->tablaCanciones->setStyleSheet(
         "QTableView { background-color: #121212; color: #b3b3b3; border: none; }"
         "QHeaderView::section { background-color: #181818; color: #FFD700; font-weight: bold; border: none; padding: 5px; }"
         "QTableView::item:selected { background-color: #FFD700; color: black; }"
         );
-        ui->sliderProgreso->setStyleSheet(
+
+    ui->sliderProgreso->setStyleSheet(
         "QSlider::groove:horizontal { border: none; height: 4px; background: #333; margin: 2px 0; border-radius: 2px; }"
         "QSlider::handle:horizontal { background: #FFD700; width: 12px; height: 12px; border-radius: 6px; margin: -4px 0; }"
         "QSlider::sub-page:horizontal { background: #FFD700; border-radius: 2px; }"
         );
-        ui->frameReproductor->setMaximumHeight(0);
 
-    // Inicializar audio
+    ui->sliderProgreso->setTracking(true);
+    ui->frameReproductor->setMaximumHeight(0);
+
+    // --- INICIALIZACIÓN DE AUDIO ---
     reproductor = new QMediaPlayer(this);
     salidaAudio = new QAudioOutput(this);
-
     reproductor->setAudioOutput(salidaAudio);
     salidaAudio->setVolume(0.5);
 
-    // En tu constructor, junto a las otras configuraciones de la tabla:
-    ui->tablaCanciones->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    // 1. Cuando el reproductor avanza, actualiza el slider
+    // --- CONEXIONES DEL REPRODUCTOR ---
     connect(reproductor, &QMediaPlayer::positionChanged, this, [this](qint64 posicion){
         ui->sliderProgreso->setMaximum(reproductor->duration());
         ui->sliderProgreso->setValue(posicion);
     });
 
-    // 2. Cuando el usuario mueve el slider, el reproductor salta a ese tiempo
     connect(ui->sliderProgreso, &QSlider::sliderMoved, this, [this](int posicion){
         reproductor->setPosition(posicion);
     });
-    // Esto hace que el slider sea más "suave" al moverlo
-    ui->sliderProgreso->setTracking(true);
 
-
-
-    // Intentamos conectar usando el miembro de la clase 'bd'
+    // --- CONEXIÓN A BASE DE DATOS ---
     if (bd.conectar()) {
-        qDebug() << "Conexión exitosa. Cargando grilla de canciones...";
-
-        // Creamos el modelo usando la conexión abierta de 'bd'
         QSqlTableModel *modelo = new QSqlTableModel(this, bd.getDB());
-
         modelo->setTable("canciones");
-        modelo->select(); // Cargamos los datos
+        modelo->select();
 
-        // Configuramos los encabezados
         modelo->setHeaderData(0, Qt::Horizontal, "ID");
         modelo->setHeaderData(1, Qt::Horizontal, "Título");
         modelo->setHeaderData(2, Qt::Horizontal, "Duración");
 
-        // Asignamos el modelo a la tabla
         ui->tablaCanciones->setModel(modelo);
-
-        // Ocultamos columnas extras
-        ui->tablaCanciones->hideColumn(3);
+        ui->tablaCanciones->hideColumn(3); // Columnas extra ocultas
         ui->tablaCanciones->hideColumn(4);
-
-        if (modelo->lastError().isValid()) {
-            qDebug() << "Error SQL:" << modelo->lastError().text();
-        }
     } else {
-        QMessageBox::critical(this, "Error", "No se pudo conectar a MySQL. Revisá la configuración.");
+        QMessageBox::critical(this, "Error", "No se pudo conectar a MySQL.");
     }
+    // 1. Conectamos el movimiento normal (arrastrar)
+    connect(ui->sliderProgreso, &QSlider::sliderMoved, this, &VentanaPrincipal::cambiarPosicion);
+
+    // 2. Conectamos el clic directo en la barra
+    connect(ui->sliderProgreso, &QSlider::actionTriggered, this, [this](int action) {
+        if (action == QAbstractSlider::SliderMove) {
+            reproductor->setPosition(ui->sliderProgreso->value());
+        }
+    });
+    // Esto hace que el slider no se quede con el foco del teclado (evita que las flechas lo muevan accidentalmente)
+    // La ruta ahora incluye la carpeta que definimos en el qrc
+    int fontId = QFontDatabase::addApplicationFont(":/recursos/fonts/MaterialSymbolsOutlined.ttf");
+
+    if (fontId != -1) {
+        QStringList familias = QFontDatabase::applicationFontFamilies(fontId);
+        QFont materialIcons(familias.at(0));
+        materialIcons.setPointSize(24);
+        ui->btnPlayPausa->setFont(materialIcons);
+    }
+    // 1. Conexión de clic
+    connect(ui->btnPlayPausa, &QPushButton::clicked, this, [this]() {
+        if (reproductor->playbackState() == QMediaPlayer::PlayingState) {
+            reproductor->pause();
+        } else {
+            reproductor->play();
+        }
+    });
+
+    // 2. Conexión para que el ícono cambie solo cuando la música cambia
+    connect(reproductor, &QMediaPlayer::playbackStateChanged, this, &VentanaPrincipal::actualizarEstadoReproduccion);
 }
 
 VentanaPrincipal::~VentanaPrincipal()
 {
-    // Al cerrar la ventana, se destruye el objeto 'bd' y se desconecta automáticamente
     delete ui;
 }
 
-void VentanaPrincipal::on_btnProbar_clicked()
-{
-    if (bd.conectar()) {
-        QMessageBox::information(this, "Éxito", "¡Conectado a SpotCloud perfectamente!");
-    } else {
-        QMessageBox::critical(this, "Error", "No se pudo conectar a MySQL.");
-    }
-}
 void VentanaPrincipal::on_tablaCanciones_doubleClicked(const QModelIndex &index)
 {
-    // 1. Obtener el nombre de la canción
+    // 1. Obtener datos de la fila
     QAbstractItemModel *modelo = ui->tablaCanciones->model();
     QString nombreCancion = modelo->data(modelo->index(index.row(), 1)).toString();
+
+    // 2. Obtener URL de la columna 4 (asegurate que sea la columna de tu link)
+    QString urlMusica = modelo->data(modelo->index(index.row(), 4)).toString();
+
     ui->lblNombreCancion->setText(nombreCancion);
 
-    // 2. Definir la ruta (USAMOS LA RUTA FIJA PARA PROBAR SI SUENA)
-    // Cuando esto funcione, después lo cambiamos a la ruta automática.
-    QString ruta = "C:/Users/olive/Desktop/Mateo/Proyecto Programacion/Proyecto-Programaci-n/musica/pray_for_plagues.mp3";
-
-    qDebug() << "Intentando reproducir:" << ruta;
-
-    // 3. Configurar y reproducir
-    reproductor->setSource(QUrl::fromLocalFile(ruta));
+    // 3. Reproducir desde la nube
+    reproductor->setSource(QUrl(urlMusica));
     reproductor->play();
 
-    // 4. Animación de apertura
+    // 4. Animación
     if (ui->frameReproductor->maximumHeight() == 0) {
         ui->frameReproductor->setVisible(true);
         QPropertyAnimation *animacion = new QPropertyAnimation(ui->frameReproductor, "maximumHeight");
@@ -134,17 +133,34 @@ void VentanaPrincipal::on_tablaCanciones_doubleClicked(const QModelIndex &index)
     }
 }
 
-void VentanaPrincipal::actualizarProgreso(qint64 posicion)
+void VentanaPrincipal::actualizarDuracionMaxima(qint64 duracion)
 {
-    // El slider debe tener el rango de la duración total de la canción
-    ui->sliderProgreso->setMaximum(reproductor->duration());
-    ui->sliderProgreso->setValue(posicion);
-
-    // Opcional: mostrar tiempo en labels (ej: lblTiempoActual y lblTiempoTotal)
-    // ui->lblTiempoActual->setText(formatearTiempo(posicion));
+    ui->sliderProgreso->setRange(0, static_cast<int>(duracion));
 }
 
 void VentanaPrincipal::cambiarPosicion(int posicion)
 {
-    reproductor->setPosition(posicion);
+    // Solo saltamos si el usuario realmente está interactuando
+    if (ui->sliderProgreso->isSliderDown()) {
+        reproductor->setPosition(posicion);
+    }
+}
+void VentanaPrincipal::actualizarEstadoReproduccion(QMediaPlayer::PlaybackState estado)
+{
+    if (estado == QMediaPlayer::PlayingState) {
+        ui->btnPlayPausa->setText("pause"); // Google lo cambia solo
+    } else {
+        ui->btnPlayPausa->setText("play_arrow");
+    }
+}
+
+void VentanaPrincipal::on_btnPausar_clicked()
+{
+    if (!reproductor->source().isEmpty()) {
+        if (reproductor->playbackState() == QMediaPlayer::PlayingState) {
+            reproductor->pause();
+        } else {
+            reproductor->play();
+        }
+    }
 }

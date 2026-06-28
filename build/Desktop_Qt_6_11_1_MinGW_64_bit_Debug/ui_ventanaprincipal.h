@@ -38,7 +38,7 @@ public:
     QHBoxLayout *horizontalLayout;
     QLabel *lblNombreCancion;
     QSpacerItem *horizontalSpacer;
-    QPushButton *btnPausar;
+    QPushButton *btnPlayPausa;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -81,13 +81,13 @@ public:
 
         horizontalLayout->addItem(horizontalSpacer);
 
-        btnPausar = new QPushButton(frameReproductor);
-        btnPausar->setObjectName("btnPausar");
-        btnPausar->setMinimumSize(QSize(100, 35));
-        btnPausar->setCursor(QCursor(Qt::CursorShape::PointingHandCursor));
-        btnPausar->setStyleSheet(QString::fromUtf8("background-color: #FFD700; color: black; font-weight: bold; border-radius: 17px;"));
+        btnPlayPausa = new QPushButton(frameReproductor);
+        btnPlayPausa->setObjectName("btnPlayPausa");
+        btnPlayPausa->setMinimumSize(QSize(100, 35));
+        btnPlayPausa->setCursor(QCursor(Qt::CursorShape::PointingHandCursor));
+        btnPlayPausa->setStyleSheet(QString::fromUtf8("background-color: #FFD700; color: black; font-weight: bold; border-radius: 17px;"));
 
-        horizontalLayout->addWidget(btnPausar);
+        horizontalLayout->addWidget(btnPlayPausa);
 
 
         verticalLayout->addWidget(frameReproductor);
@@ -110,7 +110,7 @@ public:
     {
         VentanaPrincipal->setWindowTitle(QCoreApplication::translate("VentanaPrincipal", "SpotCloud - Cat\303\241logo de M\303\272sica", nullptr));
         lblNombreCancion->setText(QCoreApplication::translate("VentanaPrincipal", "No hay canci\303\263n seleccionada", nullptr));
-        btnPausar->setText(QCoreApplication::translate("VentanaPrincipal", "Pausar", nullptr));
+        btnPlayPausa->setText(QCoreApplication::translate("VentanaPrincipal", "Pausar", nullptr));
     } // retranslateUi
 
 };

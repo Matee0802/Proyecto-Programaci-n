@@ -24,12 +24,12 @@ private:
     QAudioOutput *salidaAudio;
     // --- AGREGÁ ESTO ACÁ ABAJO ---
 private slots:
-    void on_btnProbar_clicked();
-
     // Agregá esta línea acá abajo:
     void on_tablaCanciones_doubleClicked(const QModelIndex &index);
-    void actualizarProgreso(qint64 duracion); // Actualiza la barra mientras suena
-    void cambiarPosicion(int posicion);      // Permite al usuario mover la barra
+    void cambiarPosicion(int posicion);    // Permite al usuario mover la barra
+    void actualizarDuracionMaxima(qint64 duracion);
+    void actualizarEstadoReproduccion(QMediaPlayer::PlaybackState estado); // Para detectar cambios
+    void on_btnPausar_clicked();
 };
 
 #endif // VENTANAPRINCIPAL_H
