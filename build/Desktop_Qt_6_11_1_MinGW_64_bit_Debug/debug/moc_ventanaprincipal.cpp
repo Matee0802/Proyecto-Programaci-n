@@ -39,39 +39,54 @@ template <> constexpr inline auto VentanaPrincipal::qt_create_metaobjectdata<qt_
     namespace QMC = QtMocConstants;
     QtMocHelpers::StringRefStorage qt_stringData {
         "VentanaPrincipal",
-        "on_tablaCanciones_doubleClicked",
+        "cambiarPosicion",
         "",
+        "posicion",
+        "on_tablaCanciones_doubleClicked",
         "QModelIndex",
         "index",
-        "cambiarPosicion",
-        "posicion",
-        "actualizarDuracionMaxima",
-        "duracion",
         "actualizarEstadoReproduccion",
         "QMediaPlayer::PlaybackState",
         "estado",
-        "on_btnPausar_clicked"
+        "actualizarDuracionMaxima",
+        "duracion",
+        "on_btnNext_clicked",
+        "on_btnPrev_clicked",
+        "cargarYReproducir",
+        "fila",
+        "on_btnShuffle_clicked",
+        "on_btnRepeat_clicked"
     };
 
     QtMocHelpers::UintData qt_methods {
-        // Slot 'on_tablaCanciones_doubleClicked'
-        QtMocHelpers::SlotData<void(const QModelIndex &)>(1, 2, QMC::AccessPrivate, QMetaType::Void, {{
-            { 0x80000000 | 3, 4 },
-        }}),
         // Slot 'cambiarPosicion'
-        QtMocHelpers::SlotData<void(int)>(5, 2, QMC::AccessPrivate, QMetaType::Void, {{
-            { QMetaType::Int, 6 },
+        QtMocHelpers::SlotData<void(int)>(1, 2, QMC::AccessPrivate, QMetaType::Void, {{
+            { QMetaType::Int, 3 },
         }}),
-        // Slot 'actualizarDuracionMaxima'
-        QtMocHelpers::SlotData<void(qint64)>(7, 2, QMC::AccessPrivate, QMetaType::Void, {{
-            { QMetaType::LongLong, 8 },
+        // Slot 'on_tablaCanciones_doubleClicked'
+        QtMocHelpers::SlotData<void(const QModelIndex &)>(4, 2, QMC::AccessPrivate, QMetaType::Void, {{
+            { 0x80000000 | 5, 6 },
         }}),
         // Slot 'actualizarEstadoReproduccion'
-        QtMocHelpers::SlotData<void(QMediaPlayer::PlaybackState)>(9, 2, QMC::AccessPrivate, QMetaType::Void, {{
-            { 0x80000000 | 10, 11 },
+        QtMocHelpers::SlotData<void(QMediaPlayer::PlaybackState)>(7, 2, QMC::AccessPrivate, QMetaType::Void, {{
+            { 0x80000000 | 8, 9 },
         }}),
-        // Slot 'on_btnPausar_clicked'
+        // Slot 'actualizarDuracionMaxima'
+        QtMocHelpers::SlotData<void(qint64)>(10, 2, QMC::AccessPrivate, QMetaType::Void, {{
+            { QMetaType::LongLong, 11 },
+        }}),
+        // Slot 'on_btnNext_clicked'
         QtMocHelpers::SlotData<void()>(12, 2, QMC::AccessPrivate, QMetaType::Void),
+        // Slot 'on_btnPrev_clicked'
+        QtMocHelpers::SlotData<void()>(13, 2, QMC::AccessPrivate, QMetaType::Void),
+        // Slot 'cargarYReproducir'
+        QtMocHelpers::SlotData<void(int)>(14, 2, QMC::AccessPrivate, QMetaType::Void, {{
+            { QMetaType::Int, 15 },
+        }}),
+        // Slot 'on_btnShuffle_clicked'
+        QtMocHelpers::SlotData<void()>(16, 2, QMC::AccessPrivate, QMetaType::Void),
+        // Slot 'on_btnRepeat_clicked'
+        QtMocHelpers::SlotData<void()>(17, 2, QMC::AccessPrivate, QMetaType::Void),
     };
     QtMocHelpers::UintData qt_properties {
     };
@@ -95,11 +110,15 @@ void VentanaPrincipal::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int
     auto *_t = static_cast<VentanaPrincipal *>(_o);
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
-        case 0: _t->on_tablaCanciones_doubleClicked((*reinterpret_cast<std::add_pointer_t<QModelIndex>>(_a[1]))); break;
-        case 1: _t->cambiarPosicion((*reinterpret_cast<std::add_pointer_t<int>>(_a[1]))); break;
-        case 2: _t->actualizarDuracionMaxima((*reinterpret_cast<std::add_pointer_t<qint64>>(_a[1]))); break;
-        case 3: _t->actualizarEstadoReproduccion((*reinterpret_cast<std::add_pointer_t<QMediaPlayer::PlaybackState>>(_a[1]))); break;
-        case 4: _t->on_btnPausar_clicked(); break;
+        case 0: _t->cambiarPosicion((*reinterpret_cast<std::add_pointer_t<int>>(_a[1]))); break;
+        case 1: _t->on_tablaCanciones_doubleClicked((*reinterpret_cast<std::add_pointer_t<QModelIndex>>(_a[1]))); break;
+        case 2: _t->actualizarEstadoReproduccion((*reinterpret_cast<std::add_pointer_t<QMediaPlayer::PlaybackState>>(_a[1]))); break;
+        case 3: _t->actualizarDuracionMaxima((*reinterpret_cast<std::add_pointer_t<qint64>>(_a[1]))); break;
+        case 4: _t->on_btnNext_clicked(); break;
+        case 5: _t->on_btnPrev_clicked(); break;
+        case 6: _t->cargarYReproducir((*reinterpret_cast<std::add_pointer_t<int>>(_a[1]))); break;
+        case 7: _t->on_btnShuffle_clicked(); break;
+        case 8: _t->on_btnRepeat_clicked(); break;
         default: ;
         }
     }
@@ -124,14 +143,14 @@ int VentanaPrincipal::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 5)
+        if (_id < 9)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 5;
+        _id -= 9;
     }
     if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 5)
+        if (_id < 9)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 5;
+        _id -= 9;
     }
     return _id;
 }

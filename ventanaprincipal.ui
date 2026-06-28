@@ -6,15 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1011</width>
-    <height>631</height>
+    <width>1000</width>
+    <height>600</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>SpotCloud - Catálogo de Música</string>
+   <string>SpotCloud</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout">
+   <layout class="QVBoxLayout" name="verticalLayout_Main" stretch="0,1,0">
     <property name="spacing">
      <number>0</number>
     </property>
@@ -31,45 +31,50 @@
      <number>0</number>
     </property>
     <item>
-     <widget class="QTableView" name="tablaCanciones">
-      <property name="frameShape">
-       <enum>QFrame::Shape::NoFrame</enum>
+     <widget class="QFrame" name="widgetNav">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>54</height>
+       </size>
       </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QFrame" name="frameReproductor">
       <property name="maximumSize">
        <size>
         <width>16777215</width>
-        <height>80</height>
+        <height>54</height>
        </size>
       </property>
-      <property name="visible">
-       <bool>false</bool>
-      </property>
       <property name="styleSheet">
-       <string notr="true">background-color: #181818;</string>
+       <string notr="true">background-color: #090909; border-bottom: 1px solid #181818;</string>
       </property>
-      <layout class="QHBoxLayout" name="horizontalLayout">
+      <layout class="QHBoxLayout" name="horizontalLayout_Nav">
+       <property name="spacing">
+        <number>18</number>
+       </property>
        <property name="leftMargin">
-        <number>20</number>
+        <number>24</number>
        </property>
        <property name="rightMargin">
-        <number>20</number>
+        <number>24</number>
        </property>
        <item>
-        <widget class="QLabel" name="lblNombreCancion">
+        <widget class="QLabel" name="lblLogo">
+         <property name="font">
+          <font>
+           <pointsize>13</pointsize>
+           <bold>true</bold>
+          </font>
+         </property>
          <property name="styleSheet">
-          <string notr="true">color: white; font-weight: bold; font-size: 14px;</string>
+          <string notr="true">color: #FFD700;</string>
          </property>
          <property name="text">
-          <string>No hay canción seleccionada</string>
+          <string>SPOTCLOUD</string>
          </property>
         </widget>
        </item>
        <item>
-        <spacer name="horizontalSpacer">
+        <spacer name="horizontalSpacer_NavLeft">
          <property name="orientation">
           <enum>Qt::Orientation::Horizontal</enum>
          </property>
@@ -82,53 +87,494 @@
         </spacer>
        </item>
        <item>
-        <widget class="QPushButton" name="btnPlayPausa">
-         <property name="minimumSize">
-          <size>
-           <width>100</width>
-           <height>35</height>
-          </size>
-         </property>
-         <property name="cursor">
-          <cursorShape>PointingHandCursor</cursorShape>
-         </property>
+        <widget class="QPushButton" name="btnInicio">
          <property name="styleSheet">
-          <string notr="true">background-color: #FFD700; color: black; font-weight: bold; border-radius: 17px;</string>
+          <string notr="true">background: transparent; color: white; border: none; font-weight: bold;</string>
          </property>
          <property name="text">
-          <string>Pausar</string>
+          <string>Inicio</string>
          </property>
         </widget>
        </item>
+       <item>
+        <widget class="QPushButton" name="btnExplorar">
+         <property name="styleSheet">
+          <string notr="true">background: transparent; color: #b3b3b3; border: none;</string>
+         </property>
+         <property name="text">
+          <string>Explorar</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="btnBuscar">
+         <property name="styleSheet">
+          <string notr="true">background: transparent; color: #b3b3b3; border: none;</string>
+         </property>
+         <property name="text">
+          <string>Buscar</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_NavRight">
+         <property name="orientation">
+          <enum>Qt::Orientation::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
       </layout>
-      <widget class="QSlider" name="sliderProgreso">
-       <property name="geometry">
-        <rect>
-         <x>300</x>
-         <y>20</y>
-         <width>400</width>
-         <height>20</height>
-        </rect>
-       </property>
-       <property name="orientation">
-        <enum>Qt::Orientation::Horizontal</enum>
-       </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QStackedWidget" name="stackedWidget">
+      <property name="styleSheet">
+       <string notr="true">background-color: #121212; color: white;</string>
+      </property>
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="paginaInicio">
+       <layout class="QVBoxLayout" name="verticalLayout_Inicio">
+        <property name="spacing">
+         <number>14</number>
+        </property>
+        <property name="leftMargin">
+         <number>24</number>
+        </property>
+        <property name="topMargin">
+         <number>22</number>
+        </property>
+        <property name="rightMargin">
+         <number>24</number>
+        </property>
+        <property name="bottomMargin">
+         <number>22</number>
+        </property>
+        <item>
+         <widget class="QLabel" name="lblTituloInicio">
+          <property name="font">
+           <font>
+            <pointsize>20</pointsize>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color: #FFD700;</string>
+          </property>
+          <property name="text">
+           <string>Buenas noches</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="lblSubtituloInicio">
+          <property name="styleSheet">
+           <string notr="true">color: #b3b3b3; font-size: 11px;</string>
+          </property>
+          <property name="text">
+           <string>Tu biblioteca</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QTableView" name="tablaCanciones">
+          <property name="frameShape">
+           <enum>QFrame::Shape::NoFrame</enum>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </widget>
+      <widget class="QWidget" name="paginaExplorar">
+       <layout class="QVBoxLayout" name="verticalLayout_Explorar">
+        <property name="spacing">
+         <number>14</number>
+        </property>
+        <property name="leftMargin">
+         <number>24</number>
+        </property>
+        <property name="topMargin">
+         <number>22</number>
+        </property>
+        <property name="rightMargin">
+         <number>24</number>
+        </property>
+        <property name="bottomMargin">
+         <number>22</number>
+        </property>
+        <item>
+         <widget class="QLabel" name="lblTituloExplorar">
+          <property name="font">
+           <font>
+            <pointsize>20</pointsize>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color: #FFD700;</string>
+          </property>
+          <property name="text">
+           <string>Explorar</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QTableView" name="tablaExplorar">
+          <property name="frameShape">
+           <enum>QFrame::Shape::NoFrame</enum>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="paginaBuscar">
+       <layout class="QVBoxLayout" name="verticalLayout_Buscar">
+        <property name="spacing">
+         <number>14</number>
+        </property>
+        <property name="leftMargin">
+         <number>24</number>
+        </property>
+        <property name="topMargin">
+         <number>22</number>
+        </property>
+        <property name="rightMargin">
+         <number>24</number>
+        </property>
+        <property name="bottomMargin">
+         <number>22</number>
+        </property>
+        <item>
+         <widget class="QLabel" name="lblTituloBuscar">
+          <property name="font">
+           <font>
+            <pointsize>20</pointsize>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color: #FFD700;</string>
+          </property>
+          <property name="text">
+           <string>Buscar</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="txtBuscar">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>36</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: #181818; color: white; border: 1px solid #282828; border-radius: 4px; padding: 8px;</string>
+          </property>
+          <property name="placeholderText">
+           <string>Buscar canciones, albumes o artistas</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QTableView" name="tablaBusqueda">
+          <property name="frameShape">
+           <enum>QFrame::Shape::NoFrame</enum>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="paginaAlbum">
+       <layout class="QVBoxLayout" name="verticalLayout_Album">
+        <property name="spacing">
+         <number>14</number>
+        </property>
+        <property name="leftMargin">
+         <number>24</number>
+        </property>
+        <property name="topMargin">
+         <number>22</number>
+        </property>
+        <property name="rightMargin">
+         <number>24</number>
+        </property>
+        <property name="bottomMargin">
+         <number>22</number>
+        </property>
+        <item>
+         <widget class="QLabel" name="lblTituloAlbum">
+          <property name="font">
+           <font>
+            <pointsize>20</pointsize>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color: white;</string>
+          </property>
+          <property name="text">
+           <string>Album</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="lblArtistaAlbum">
+          <property name="styleSheet">
+           <string notr="true">color: #b3b3b3;</string>
+          </property>
+          <property name="text">
+           <string>Artista</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QTableView" name="tablaCancionesAlbum">
+          <property name="frameShape">
+           <enum>QFrame::Shape::NoFrame</enum>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+    <item>
+     <widget class="QFrame" name="frameReproductor">
+      <property name="styleSheet">
+       <string notr="true">background-color: #181818; color: white; border-top: 1px solid #282828;</string>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_Reproductor" stretch="0,0,0,0,0">
+       <property name="leftMargin">
+        <number>15</number>
+       </property>
+       <property name="rightMargin">
+        <number>15</number>
+       </property>
+       <item>
+        <widget class="QWidget" name="widget_Info" native="true">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_Info">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QLabel" name="lblNombreCancion">
+            <property name="font">
+             <font>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color: white; border: none;</string>
+            </property>
+            <property name="text">
+             <string>Nombre de la Cancion</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_Artista">
+            <property name="styleSheet">
+             <string notr="true">color: #b3b3b3; font-size: 11px; border: none;</string>
+            </property>
+            <property name="text">
+             <string>Artista</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_1">
+         <property name="orientation">
+          <enum>Qt::Orientation::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QWidget" name="widget_Controles" native="true">
+         <layout class="QVBoxLayout" name="verticalLayout_Controles">
+          <property name="spacing">
+           <number>5</number>
+          </property>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_Botones">
+            <property name="spacing">
+             <number>15</number>
+            </property>
+            <item>
+             <spacer name="horizontalSpacer_ControlLeft">
+              <property name="orientation">
+               <enum>Qt::Orientation::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btnShuffle">
+              <property name="styleSheet">
+               <string>background: transparent; color: #b3b3b3; border: none;</string>
+              </property>
+              <property name="text">
+               <string>shuffle</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btnPrev">
+              <property name="styleSheet">
+               <string>background: transparent; color: #b3b3b3; border: none;</string>
+              </property>
+              <property name="text">
+               <string>skip_previous</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btnPlayPausa">
+              <property name="styleSheet">
+               <string>background: transparent; color: white; border: none; font-size: 36px;</string>
+              </property>
+              <property name="text">
+               <string>play_circle</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btnNext">
+              <property name="styleSheet">
+               <string>background: transparent; color: #b3b3b3; border: none;</string>
+              </property>
+              <property name="text">
+               <string>skip_next</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btnRepeat">
+              <property name="styleSheet">
+               <string>background: transparent; color: #b3b3b3; border: none;</string>
+              </property>
+              <property name="text">
+               <string>repeat</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_ControlRight">
+              <property name="orientation">
+               <enum>Qt::Orientation::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QSlider" name="sliderProgreso">
+            <property name="orientation">
+             <enum>Qt::Orientation::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Orientation::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QWidget" name="widget_Volumen" native="true">
+         <layout class="QHBoxLayout" name="horizontalLayout_Volumen">
+          <property name="spacing">
+           <number>10</number>
+          </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QLabel" name="lblIconoVol">
+            <property name="styleSheet">
+             <string notr="true">color: #b3b3b3; border: none;</string>
+            </property>
+            <property name="text">
+             <string>volume_up</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QSlider" name="sliderVolumen">
+            <property name="orientation">
+             <enum>Qt::Orientation::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </item>
    </layout>
   </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>1011</width>
-     <height>21</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources/>
  <connections/>

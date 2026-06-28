@@ -414,6 +414,10 @@ release/moc_ventanaprincipal.cpp: ../../ventanaprincipal.h \
 		C:/QT/6.11.1/mingw_64/include/QtMultimedia/qaudio.h \
 		C:/QT/6.11.1/mingw_64/include/QtMultimedia/QAudioOutput \
 		C:/QT/6.11.1/mingw_64/include/QtMultimedia/qaudiooutput.h \
+		C:/QT/6.11.1/mingw_64/include/QtSql/QSqlTableModel \
+		C:/QT/6.11.1/mingw_64/include/QtSql/qsqltablemodel.h \
+		C:/QT/6.11.1/mingw_64/include/QtSql/qsqlquerymodel.h \
+		C:/QT/6.11.1/mingw_64/include/QtCore/qabstractitemmodel.h \
 		release/moc_predefs.h \
 		C:/QT/6.11.1/mingw_64/bin/moc.exe
 	C:\QT\6.11.1\mingw_64\bin\moc.exe $(DEFINES) --include "C:/Users/olive/Desktop/Mateo/Proyecto Programacion/Proyecto-Programaci-n/build/Desktop_Qt_6_11_1_MinGW_64_bit_Debug/release/moc_predefs.h" -IC:/QT/6.11.1/mingw_64/mkspecs/win32-g++ -I"C:/Users/olive/Desktop/Mateo/Proyecto Programacion/Proyecto-Programaci-n" -I"C:/Users/olive/Desktop/Mateo/Proyecto Programacion/Proyecto-Programaci-n/include" -IC:/mysql-connector-c-6.1.11-winx64/include -IC:/QT/6.11.1/mingw_64/include -IC:/QT/6.11.1/mingw_64/include/QtWidgets -IC:/QT/6.11.1/mingw_64/include/QtMultimedia -IC:/QT/6.11.1/mingw_64/include/QtGui -IC:/QT/6.11.1/mingw_64/include/QtSql -IC:/QT/6.11.1/mingw_64/include/QtNetwork -IC:/QT/6.11.1/mingw_64/include/QtCore -I. -IC:/QT/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++ -IC:/QT/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/x86_64-w64-mingw32 -IC:/QT/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/backward -IC:/QT/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include -IC:/QT/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include-fixed -IC:/QT/Tools/mingw1310_64/x86_64-w64-mingw32/include ..\..\ventanaprincipal.h -o release\moc_ventanaprincipal.cpp
@@ -666,7 +670,11 @@ release/main.o: ../../main.cpp C:/QT/6.11.1/mingw_64/include/QtWidgets/QApplicat
 		C:/QT/6.11.1/mingw_64/include/QtMultimedia/qtaudio.h \
 		C:/QT/6.11.1/mingw_64/include/QtMultimedia/qaudio.h \
 		C:/QT/6.11.1/mingw_64/include/QtMultimedia/QAudioOutput \
-		C:/QT/6.11.1/mingw_64/include/QtMultimedia/qaudiooutput.h
+		C:/QT/6.11.1/mingw_64/include/QtMultimedia/qaudiooutput.h \
+		C:/QT/6.11.1/mingw_64/include/QtSql/QSqlTableModel \
+		C:/QT/6.11.1/mingw_64/include/QtSql/qsqltablemodel.h \
+		C:/QT/6.11.1/mingw_64/include/QtSql/qsqlquerymodel.h \
+		C:/QT/6.11.1/mingw_64/include/QtCore/qabstractitemmodel.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\main.o ..\..\main.cpp
 
 release/AlbumDAOImpl.o: ../../src/dao/AlbumDAOImpl.cpp ../../include/dao/AlbumDAOImpl.h \
@@ -2196,55 +2204,12 @@ release/ventanaprincipal.o: ../../ventanaprincipal.cpp ../../ventanaprincipal.h 
 		C:/QT/6.11.1/mingw_64/include/QtMultimedia/qaudio.h \
 		C:/QT/6.11.1/mingw_64/include/QtMultimedia/QAudioOutput \
 		C:/QT/6.11.1/mingw_64/include/QtMultimedia/qaudiooutput.h \
-		ui_ventanaprincipal.h \
-		C:/QT/6.11.1/mingw_64/include/QtCore/QVariant \
-		C:/QT/6.11.1/mingw_64/include/QtWidgets/QApplication \
-		C:/QT/6.11.1/mingw_64/include/QtWidgets/qapplication.h \
-		C:/QT/6.11.1/mingw_64/include/QtWidgets/QFrame \
-		C:/QT/6.11.1/mingw_64/include/QtWidgets/qframe.h \
-		C:/QT/6.11.1/mingw_64/include/QtWidgets/QHBoxLayout \
-		C:/QT/6.11.1/mingw_64/include/QtWidgets/qboxlayout.h \
-		C:/QT/6.11.1/mingw_64/include/QtWidgets/qlayout.h \
-		C:/QT/6.11.1/mingw_64/include/QtWidgets/qlayoutitem.h \
-		C:/QT/6.11.1/mingw_64/include/QtWidgets/qgridlayout.h \
-		C:/QT/6.11.1/mingw_64/include/QtWidgets/QHeaderView \
-		C:/QT/6.11.1/mingw_64/include/QtWidgets/qheaderview.h \
-		C:/QT/6.11.1/mingw_64/include/QtWidgets/qabstractitemview.h \
-		C:/QT/6.11.1/mingw_64/include/QtWidgets/qabstractscrollarea.h \
-		C:/QT/6.11.1/mingw_64/include/QtCore/qabstractitemmodel.h \
-		C:/QT/6.11.1/mingw_64/include/QtCore/qitemselectionmodel.h \
-		C:/QT/6.11.1/mingw_64/include/QtWidgets/qabstractitemdelegate.h \
-		C:/QT/6.11.1/mingw_64/include/QtWidgets/qstyleoption.h \
-		C:/QT/6.11.1/mingw_64/include/QtWidgets/qabstractspinbox.h \
-		C:/QT/6.11.1/mingw_64/include/QtGui/qvalidator.h \
-		C:/QT/6.11.1/mingw_64/include/QtCore/qregularexpression.h \
-		C:/QT/6.11.1/mingw_64/include/QtWidgets/qslider.h \
-		C:/QT/6.11.1/mingw_64/include/QtWidgets/qabstractslider.h \
-		C:/QT/6.11.1/mingw_64/include/QtWidgets/qstyle.h \
-		C:/QT/6.11.1/mingw_64/include/QtWidgets/qtabbar.h \
-		C:/QT/6.11.1/mingw_64/include/QtWidgets/qrubberband.h \
-		C:/QT/6.11.1/mingw_64/include/QtWidgets/QLabel \
-		C:/QT/6.11.1/mingw_64/include/QtWidgets/qlabel.h \
-		C:/QT/6.11.1/mingw_64/include/QtGui/qpicture.h \
-		C:/QT/6.11.1/mingw_64/include/QtGui/qtextdocument.h \
-		C:/QT/6.11.1/mingw_64/include/QtWidgets/QMenuBar \
-		C:/QT/6.11.1/mingw_64/include/QtWidgets/qmenubar.h \
-		C:/QT/6.11.1/mingw_64/include/QtWidgets/qmenu.h \
-		C:/QT/6.11.1/mingw_64/include/QtWidgets/QPushButton \
-		C:/QT/6.11.1/mingw_64/include/QtWidgets/qpushbutton.h \
-		C:/QT/6.11.1/mingw_64/include/QtWidgets/qabstractbutton.h \
-		C:/QT/6.11.1/mingw_64/include/QtWidgets/QSlider \
-		C:/QT/6.11.1/mingw_64/include/QtWidgets/QSpacerItem \
-		C:/QT/6.11.1/mingw_64/include/QtWidgets/QStatusBar \
-		C:/QT/6.11.1/mingw_64/include/QtWidgets/qstatusbar.h \
-		C:/QT/6.11.1/mingw_64/include/QtWidgets/QTableView \
-		C:/QT/6.11.1/mingw_64/include/QtWidgets/qtableview.h \
-		C:/QT/6.11.1/mingw_64/include/QtWidgets/QVBoxLayout \
-		C:/QT/6.11.1/mingw_64/include/QtWidgets/QWidget \
-		../../include/database/conexion.h \
 		C:/QT/6.11.1/mingw_64/include/QtSql/QSqlTableModel \
 		C:/QT/6.11.1/mingw_64/include/QtSql/qsqltablemodel.h \
 		C:/QT/6.11.1/mingw_64/include/QtSql/qsqlquerymodel.h \
+		C:/QT/6.11.1/mingw_64/include/QtCore/qabstractitemmodel.h \
+		ui_ventanaprincipal.h \
+		../../include/database/conexion.h \
 		C:/QT/6.11.1/mingw_64/include/QtWidgets/QMessageBox \
 		C:/QT/6.11.1/mingw_64/include/QtWidgets/qmessagebox.h \
 		C:/QT/6.11.1/mingw_64/include/QtWidgets/qdialog.h \

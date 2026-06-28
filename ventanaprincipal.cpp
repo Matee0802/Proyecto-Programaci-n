@@ -1,13 +1,13 @@
 #include "ventanaprincipal.h"
 #include "ui_ventanaprincipal.h"
 #include "../../include/database/conexion.h"
-#include <QtSql/QSqlTableModel>
+#include <QtSql/QSqlQueryModel>
 #include <QtSql/QSqlError>
 #include <QMessageBox>
 #include <QDebug>
 #include <QPropertyAnimation>
 #include <QFontDatabase>
-
+#include <QRandomGenerator>
 
 VentanaPrincipal::VentanaPrincipal(QWidget *parent)
     : QMainWindow(parent)
@@ -15,12 +15,33 @@ VentanaPrincipal::VentanaPrincipal(QWidget *parent)
 {
     ui->setupUi(this);
 
+    // --- CARGA DE FUENTE MATERIAL ICONS ---
+    int fontId = QFontDatabase::addApplicationFont(":/recursos/fonts/MaterialSymbolsOutlined.ttf");
+
+    if (fontId != -1) {
+        QStringList familias = QFontDatabase::applicationFontFamilies(fontId);
+        QFont materialIcons(familias.at(0));
+        materialIcons.setPointSize(20);
+
+        ui->btnShuffle->setFont(materialIcons);
+        ui->btnPrev->setFont(materialIcons);
+        ui->btnPlayPausa->setFont(materialIcons);
+        ui->btnNext->setFont(materialIcons);
+        ui->btnRepeat->setFont(materialIcons);
+        ui->lblIconoVol->setFont(materialIcons);
+    } else {
+        qDebug() << "Error: No se pudo cargar la fuente.";
+    }
+
+    ui->widget_Controles->layout()->setContentsMargins(0, 0, 0, 5);
+    ui->widget_Controles->layout()->setSpacing(0);
+
     // --- CONFIGURACIÓN VISUAL ---
     this->setStyleSheet("QMainWindow { background-color: #121212; }");
     ui->tablaCanciones->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     ui->tablaCanciones->verticalHeader()->setVisible(false);
     ui->tablaCanciones->setShowGrid(false);
-    ui->tablaCanciones->setEditTriggers(QAbstractItemView::NoEditTriggers); // Bloquear edición
+    ui->tablaCanciones->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
     ui->tablaCanciones->setStyleSheet(
         "QTableView { background-color: #121212; color: #b3b3b3; border: none; }"
@@ -33,6 +54,11 @@ VentanaPrincipal::VentanaPrincipal(QWidget *parent)
         "QSlider::handle:horizontal { background: #FFD700; width: 12px; height: 12px; border-radius: 6px; margin: -4px 0; }"
         "QSlider::sub-page:horizontal { background: #FFD700; border-radius: 2px; }"
         );
+    ui->sliderVolumen->setStyleSheet(
+        "QSlider::groove:horizontal { border: none; height: 4px; background: #333; margin: 2px 0; border-radius: 2px; }"
+        "QSlider::handle:horizontal { background: #FFD700; width: 12px; height: 12px; border-radius: 6px; margin: -4px 0; }"
+        "QSlider::sub-page:horizontal { background: #FFD700; border-radius: 2px; }"
+        );
 
     ui->sliderProgreso->setTracking(true);
     ui->frameReproductor->setMaximumHeight(0);
@@ -41,126 +67,230 @@ VentanaPrincipal::VentanaPrincipal(QWidget *parent)
     reproductor = new QMediaPlayer(this);
     salidaAudio = new QAudioOutput(this);
     reproductor->setAudioOutput(salidaAudio);
+    ui->sliderVolumen->setRange(0, 100);
+    ui->sliderVolumen->setValue(50);
     salidaAudio->setVolume(0.5);
+    ui->lblIconoVol->setText("volume_up");
 
-    // --- CONEXIONES DEL REPRODUCTOR ---
+    // --- CONEXIONES ---
     connect(reproductor, &QMediaPlayer::positionChanged, this, [this](qint64 posicion){
         ui->sliderProgreso->setMaximum(reproductor->duration());
         ui->sliderProgreso->setValue(posicion);
     });
 
-    connect(ui->sliderProgreso, &QSlider::sliderMoved, this, [this](int posicion){
-        reproductor->setPosition(posicion);
-    });
+    connect(ui->sliderProgreso, &QSlider::sliderMoved, this, &VentanaPrincipal::cambiarPosicion);
 
-    // --- CONEXIÓN A BASE DE DATOS ---
     if (bd.conectar()) {
-        QSqlTableModel *modelo = new QSqlTableModel(this, bd.getDB());
-        modelo->setTable("canciones");
-        modelo->select();
+        modelo = new QSqlQueryModel(this);
+
+        modelo->setQuery(
+            "SELECT "
+            "c.id_cancion, "
+            "c.titulo, "
+            "c.duracion, "
+            "COALESCE(ar.nombre, 'Artista desconocido') AS artista, "
+            "c.ruta_archivo_mp3 "
+            "FROM canciones c "
+            "LEFT JOIN albumes al ON c.id_album = al.id_album "
+            "LEFT JOIN artistas ar ON al.id_artista = ar.id_artista",
+            bd.getDB()
+            );
+
+        if (modelo->lastError().isValid()) {
+            qDebug() << "Error en consulta:" << modelo->lastError().text();
+            QMessageBox::critical(this, "Error", modelo->lastError().text());
+        }
 
         modelo->setHeaderData(0, Qt::Horizontal, "ID");
         modelo->setHeaderData(1, Qt::Horizontal, "Título");
         modelo->setHeaderData(2, Qt::Horizontal, "Duración");
 
         ui->tablaCanciones->setModel(modelo);
-        ui->tablaCanciones->hideColumn(3); // Columnas extra ocultas
+
+        ui->tablaCanciones->hideColumn(3);
         ui->tablaCanciones->hideColumn(4);
-    } else {
-        QMessageBox::critical(this, "Error", "No se pudo conectar a MySQL.");
     }
-    // 1. Conectamos el movimiento normal (arrastrar)
-    connect(ui->sliderProgreso, &QSlider::sliderMoved, this, &VentanaPrincipal::cambiarPosicion);
+    modelo->setHeaderData(0, Qt::Horizontal, "ID");
+    modelo->setHeaderData(1, Qt::Horizontal, "Título");
+    modelo->setHeaderData(2, Qt::Horizontal, "Duración");
 
-    // 2. Conectamos el clic directo en la barra
-    connect(ui->sliderProgreso, &QSlider::actionTriggered, this, [this](int action) {
-        if (action == QAbstractSlider::SliderMove) {
-            reproductor->setPosition(ui->sliderProgreso->value());
-        }
-    });
-    // Esto hace que el slider no se quede con el foco del teclado (evita que las flechas lo muevan accidentalmente)
-    // La ruta ahora incluye la carpeta que definimos en el qrc
-    int fontId = QFontDatabase::addApplicationFont(":/recursos/fonts/MaterialSymbolsOutlined.ttf");
+    ui->tablaCanciones->setModel(modelo);
 
-    if (fontId != -1) {
-        QStringList familias = QFontDatabase::applicationFontFamilies(fontId);
-        QFont materialIcons(familias.at(0));
-        materialIcons.setPointSize(24);
-        ui->btnPlayPausa->setFont(materialIcons);
-    }
-    // 1. Conexión de clic
-    connect(ui->btnPlayPausa, &QPushButton::clicked, this, [this]() {
-        if (reproductor->playbackState() == QMediaPlayer::PlayingState) {
-            reproductor->pause();
+    ui->tablaCanciones->hideColumn(3);
+    ui->tablaCanciones->hideColumn(4);
+
+    connect(ui->sliderVolumen, &QSlider::valueChanged, this, [this](int val) {
+        salidaAudio->setVolume(static_cast<float>(val) / 100.0f);
+
+        if (val == 0) {
+            ui->lblIconoVol->setText("volume_off");
+        } else if (val < 50) {
+            ui->lblIconoVol->setText("volume_down");
         } else {
-            reproductor->play();
+            ui->lblIconoVol->setText("volume_up");
         }
     });
 
-    // 2. Conexión para que el ícono cambie solo cuando la música cambia
+    connect(ui->btnPlayPausa, &QPushButton::clicked, this, [this]() {
+        if (reproductor->playbackState() == QMediaPlayer::PlayingState) reproductor->pause();
+        else reproductor->play();
+    });
+
     connect(reproductor, &QMediaPlayer::playbackStateChanged, this, &VentanaPrincipal::actualizarEstadoReproduccion);
+
+    connect(reproductor, &QMediaPlayer::mediaStatusChanged, this,
+            [this](QMediaPlayer::MediaStatus estado) {
+                if (estado == QMediaPlayer::EndOfMedia) {
+                    manejarFinCancion();
+                }
+            });
+    ui->stackedWidget->setCurrentWidget(ui->paginaInicio);
+
+    connect(ui->btnInicio, &QPushButton::clicked, this, [this]() {
+        ui->stackedWidget->setCurrentWidget(ui->paginaInicio);
+    });
+
+    connect(ui->btnExplorar, &QPushButton::clicked, this, [this]() {
+        ui->stackedWidget->setCurrentWidget(ui->paginaExplorar);
+    });
+
+    connect(ui->btnBuscar, &QPushButton::clicked, this, [this]() {
+        ui->stackedWidget->setCurrentWidget(ui->paginaBuscar);
+    });
 }
 
-VentanaPrincipal::~VentanaPrincipal()
-{
-    delete ui;
-}
-
+// --- TUS FUNCIONES EXISTENTES ---
 void VentanaPrincipal::on_tablaCanciones_doubleClicked(const QModelIndex &index)
 {
-    // 1. Obtener datos de la fila
-    QAbstractItemModel *modelo = ui->tablaCanciones->model();
-    QString nombreCancion = modelo->data(modelo->index(index.row(), 1)).toString();
+    cargarYReproducir(index.row()); // Solo pasamos la fila
 
-    // 2. Obtener URL de la columna 4 (asegurate que sea la columna de tu link)
-    QString urlMusica = modelo->data(modelo->index(index.row(), 4)).toString();
-
-    ui->lblNombreCancion->setText(nombreCancion);
-
-    // 3. Reproducir desde la nube
-    reproductor->setSource(QUrl(urlMusica));
-    reproductor->play();
-
-    // 4. Animación
+    // Mantenemos tu animación intacta
     if (ui->frameReproductor->maximumHeight() == 0) {
-        ui->frameReproductor->setVisible(true);
         QPropertyAnimation *animacion = new QPropertyAnimation(ui->frameReproductor, "maximumHeight");
         animacion->setDuration(350);
         animacion->setStartValue(0);
         animacion->setEndValue(80);
-        animacion->setEasingCurve(QEasingCurve::OutCubic);
         animacion->start(QPropertyAnimation::DeleteWhenStopped);
     }
 }
+
+void VentanaPrincipal::cambiarPosicion(int posicion) {
+    if (ui->sliderProgreso->isSliderDown()) reproductor->setPosition(posicion);
+}
+
+
+
+void VentanaPrincipal::actualizarEstadoReproduccion(QMediaPlayer::PlaybackState estado) {
+    ui->btnPlayPausa->setText(estado == QMediaPlayer::PlayingState ? "pause" : "play_arrow");
+}
+
 
 void VentanaPrincipal::actualizarDuracionMaxima(qint64 duracion)
 {
     ui->sliderProgreso->setRange(0, static_cast<int>(duracion));
 }
 
-void VentanaPrincipal::cambiarPosicion(int posicion)
+void VentanaPrincipal::on_btnNext_clicked()
 {
-    // Solo saltamos si el usuario realmente está interactuando
-    if (ui->sliderProgreso->isSliderDown()) {
-        reproductor->setPosition(posicion);
+    if (!modelo || modelo->rowCount() == 0) return;
+
+    int siguienteFila;
+
+    if (modoAleatorio && modelo->rowCount() > 1) {
+        do {
+            siguienteFila = QRandomGenerator::global()->bounded(modelo->rowCount());
+        } while (siguienteFila == filaActual);
+    } else {
+        siguienteFila = (filaActual + 1) % modelo->rowCount();
+    }
+
+    cargarYReproducir(siguienteFila);
+}
+
+void VentanaPrincipal::on_btnPrev_clicked() {
+    QAbstractItemModel *modelo = ui->tablaCanciones->model();
+    if (!modelo || modelo->rowCount() == 0) return;
+
+    int anteriorFila = (filaActual <= 0) ? modelo->rowCount() - 1 : filaActual - 1;
+    cargarYReproducir(anteriorFila);
+}
+
+void VentanaPrincipal::cargarYReproducir(int fila) {
+    // 1. Validaciones básicas
+    QAbstractItemModel *modelo = ui->tablaCanciones->model();
+    if (!modelo || fila < 0 || fila >= modelo->rowCount()) return;
+
+    // 2. Si es la misma fila, no hacemos nada
+    if (fila == filaActual && reproductor->playbackState() == QMediaPlayer::PlayingState) return;
+
+    filaActual = fila;
+
+    // 3. Obtenemos datos
+    QString urlMusica = modelo->data(modelo->index(fila, 4)).toString();
+    QString nombreCancion = modelo->data(modelo->index(fila, 1)).toString();
+    QString artista = modelo->data(modelo->index(fila, 3)).toString();
+
+    reproductor->stop();
+    reproductor->setSource(QUrl(urlMusica));
+
+    ui->lblNombreCancion->setText(nombreCancion);
+    ui->label_Artista->setText(artista);
+
+    reproductor->play();
+    ui->frameReproductor->setVisible(true);
+
+    // 6. Actualizamos la selección de la tabla una sola vez
+    ui->tablaCanciones->blockSignals(true);
+    ui->tablaCanciones->setCurrentIndex(modelo->index(fila, 0));
+    ui->tablaCanciones->blockSignals(false);
+}
+
+void VentanaPrincipal::on_btnShuffle_clicked()
+{
+    modoAleatorio = !modoAleatorio;
+
+    if (modoAleatorio) {
+        ui->btnShuffle->setStyleSheet("background: transparent; color: #FFD700; border: none;");
+    } else {
+        ui->btnShuffle->setStyleSheet("background: transparent; color: #b3b3b3; border: none;");
     }
 }
-void VentanaPrincipal::actualizarEstadoReproduccion(QMediaPlayer::PlaybackState estado)
+void VentanaPrincipal::on_btnRepeat_clicked()
 {
-    if (estado == QMediaPlayer::PlayingState) {
-        ui->btnPlayPausa->setText("pause"); // Google lo cambia solo
+    modoRepeticion++;
+
+    if (modoRepeticion > 2) {
+        modoRepeticion = 0;
+    }
+
+    if (modoRepeticion == 0) {
+        ui->btnRepeat->setText("repeat");
+        ui->btnRepeat->setStyleSheet("background: transparent; color: #b3b3b3; border: none;");
+    } else if (modoRepeticion == 1) {
+        ui->btnRepeat->setText("repeat");
+        ui->btnRepeat->setStyleSheet("background: transparent; color: #FFD700; border: none;");
     } else {
-        ui->btnPlayPausa->setText("play_arrow");
+        ui->btnRepeat->setText("repeat_one");
+        ui->btnRepeat->setStyleSheet("background: transparent; color: #FFD700; border: none;");
     }
 }
 
-void VentanaPrincipal::on_btnPausar_clicked()
+void VentanaPrincipal::manejarFinCancion()
 {
-    if (!reproductor->source().isEmpty()) {
-        if (reproductor->playbackState() == QMediaPlayer::PlayingState) {
-            reproductor->pause();
-        } else {
-            reproductor->play();
-        }
+    if (!modelo || modelo->rowCount() == 0) return;
+
+    if (modoRepeticion == 2) {
+        cargarYReproducir(filaActual);
+        return;
     }
+
+    if (filaActual == modelo->rowCount() - 1 && modoRepeticion == 0 && !modoAleatorio) {
+        reproductor->stop();
+        ui->btnPlayPausa->setText("play_arrow");
+        return;
+    }
+
+    on_btnNext_clicked();
 }
+
+VentanaPrincipal::~VentanaPrincipal() { delete ui; }
