@@ -4,8 +4,8 @@ SpotCloud es una aplicación de escritorio desarrollada en C++ con Qt. El proyec
 
 ## Descargas
 
-- [Descargar SpotCloud (Ejecutable .exe)](sha256:b15153f6400de8221058fb92cdc1c6b2ada7f4ec1e3323a0ec79fcd0c68cd547)
-- [Descargar Script de Base de Datos (.sql)](sha256:b15153f6400de8221058fb92cdc1c6b2ada7f4ec1e3323a0ec79fcd0c68cd547)
+- [Descargar SpotCloud (Ejecutable .exe)](https://github.com/Matee0802/Proyecto-Programaci-n/releases/download/v1.0/SpotCloud_APP.rar)
+- [Descargar Script de Base de Datos (.sql)](https://github.com/Matee0802/Proyecto-Programaci-n/releases/download/v1.0/spotcloud.1.sql)
 
 ## Funcionalidades
 
