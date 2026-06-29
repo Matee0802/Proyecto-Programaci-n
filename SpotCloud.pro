@@ -10,8 +10,7 @@ INCLUDEPATH += include
 
 
 # --- CONFIGURACIÓN DE MYSQL ---
-INCLUDEPATH += C:/mysql-connector-c-6.1.11-winx64/include
-LIBS += -LC:/mysql-connector-c-6.1.11-winx64/lib -lmysql
+QT += sql
 
 # Agregamos tus cabeceras
 HEADERS += include/database/Conexion.h \

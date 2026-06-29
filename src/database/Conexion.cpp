@@ -11,10 +11,10 @@ bool Conexion::conectar(){
     // ¡OJO! Acá cambiamos "autogest" por "spotcloud"
     db.setDatabaseName(
         "Driver={MySQL ODBC 9.7 Unicode Driver};"
-        "Server=127.0.0.1;"
-        "Database=spotcloud;"
-        "User=root;"
-        "Password=;"
+        "Server=pma.torga.com.ar:3306;"
+        "Database=s11_spotcloud;"
+        "User=u11_9RmypvFBbx;"
+        "Password=!.L+MW7E59phN+nlKvpzJQsJ;"
         );
 
     if (!db.open()){
