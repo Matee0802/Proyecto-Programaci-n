@@ -44,80 +44,66 @@ SpotCloud/
 ├── ventanaprincipal.ui
 ├── recursos.qrc
 └── SpotCloud.pro
-Organización Del Código
-Models
-Contiene las clases que representan las entidades principales del sistema:
-Usuario
-Artista
-Album
-Cancion
-Historial
-ColaReproduccion
-ColaCanciones
-UsuarioArtista
-DAO
-Contiene las interfaces e implementaciones para acceder a los datos de la base de datos. Esta capa permite separar la lógica de persistencia del resto de la aplicación.
-Database
-Contiene la clase Conexion, encargada de abrir y manejar la conexión con la base de datos.
-Ventana Principal
-Los archivos ventanaprincipal.h, ventanaprincipal.cpp y ventanaprincipal.ui contienen la interfaz principal de la aplicación. Desde ahí se cargan los álbumes, se realizan búsquedas y se controla el reproductor.
-Base De Datos
-El proyecto trabaja con una base de datos relacional. Las tablas principales son:
-usuarios
-artistas
-albumes
-canciones
-historial
-cola_reproduccion
-cola_canciones
-usuarios_artistas
-La relación usada para mostrar canciones con su artista es:
-canciones -> albumes -> artistas
-Es decir, una canción pertenece a un álbum, y un álbum pertenece a un artista.
-Requisitos
-Para compilar y ejecutar el proyecto se necesita:
-Qt 6
-Qt Creator
-Compilador compatible con C++17
-Módulos de Qt:Widgets
-SQL
-Multimedia
-Network
+```
+## Organización del Proyecto
 
-Servidor MySQL o MariaDB
-Base de datos configurada con las tablas del proyecto
-Cómo Ejecutar El Proyecto
-Abrir Qt Creator.
-Seleccionar Open Project.
-Abrir el archivo:
-SpotCloud.pro
-Configurar el kit de compilación, por ejemplo:
-Desktop Qt MinGW 64-bit
-Verificar que la base de datos esté creada y activa.
-Revisar la configuración de conexión en:
-src/database/Conexion.cpp
-Compilar y ejecutar el proyecto desde Qt Creator.
-Recursos
-El proyecto usa recursos de Qt mediante:
-recursos.qrc
-Dentro de los recursos se incluye la fuente:
-MaterialSymbolsOutlined.ttf
-Esta fuente se utiliza para mostrar íconos en los botones del reproductor.
-Interfaz
-La aplicación está organizada en una ventana principal con:
-Navegación superior.
-Página de inicio con álbumes.
-Página de búsqueda.
-Página de álbum con canciones.
-Reproductor inferior fijo.
+El código sigue una arquitectura modular para facilitar el mantenimiento y la escalabilidad:
+
+```Models/```: Clases que representan las entidades principales (Usuario, Artista, Album, Cancion, Historial, Colas de reproducción).
+
+```DAO/```: Interfaces e implementaciones para el acceso a datos. Separa la persistencia de la lógica de negocio.
+
+```Database/```: Clase Conexion, encargada de gestionar la conexión con el servidor MySQL/MariaDB.
+
+```Ventana Principal/```: Interfaz de usuario (ventanaprincipal.h, .cpp, .ui). Gestiona la navegación, búsqueda y el control del reproductor.
+
+## Estructura de Base de Datos
+El proyecto utiliza una base de datos relacional con las siguientes tablas:
+**usuarios, artistas, albumes, canciones, historial, cola_reproduccion, cola_canciones y usuarios_artistas.**
+
+La jerarquía para la relación entre el contenido es:
+canciones → albumes → artistas
+(Una canción pertenece a un álbum, y un álbum pertenece a un artista).
+
+## Requisitos Técnicos
+**Framework**: Qt 6
+
+**IDE**: Qt Creator
+
+**Compilador**: Compatible con C++17
+
+**Módulos de Qt**: Widgets, SQL, Multimedia, Network
+
+**Base de Datos**: MySQL o MariaDB
+
+## Cómo Ejecutar
+**Abrir Proyecto**: Inicia Qt Creator y abre el archivo SpotCloud.pro.
+
+**Configurar Kit**: Selecciona un kit compatible (ej. Desktop Qt MinGW 64-bit).
+
+**Base de Datos**: Verifica que tu servidor esté activo y la base de datos configurada.
+
+**Conexión**: Ajusta tus credenciales de base de datos en src/database/Conexion.cpp.
+
+**Compilar**: Selecciona Build y ejecuta el proyecto.
+
+## Interfaz y Recursos
+La aplicación incluye:
+
+- Navegación superior y vista de álbumes/búsqueda.
+
+- Reproductor inferior fijo con controles multimedia.
+
+- Íconos personalizados mediante la fuente MaterialSymbolsOutlined.ttf cargada desde recursos.qrc.
+
 ## Estado Actual
 
 Actualmente SpotCloud permite navegar por álbumes, buscar contenido y reproducir canciones. La interfaz principal cuenta con controles de reproducción, carga de portadas y búsqueda por nombre o género.
 
 ## Autor
 
-- Mateo Valentino Lugo
+- **Mateo Valentino Lugo**
 
 ## Nota
 
-Proyecto académico individual desarrollado con fines educativos para la materia Programación.
+Proyecto académico individual desarrollado con fines educativos para la materia **Programación**.
