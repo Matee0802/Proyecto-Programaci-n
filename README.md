@@ -2,10 +2,9 @@
 
 SpotCloud es una aplicación de escritorio desarrollada en C++ con Qt. El proyecto funciona como un reproductor de música con una interfaz inspirada en plataformas de streaming: permite visualizar álbumes, buscar canciones, reproducir música y controlar la reproducción desde una barra inferior.
 
-## Descargas
+## Descarga
 
 - [Descargar SpotCloud (Ejecutable .exe)](https://github.com/Matee0802/Proyecto-Programaci-n/releases/download/v1.0/SpotCloud_APP.rar)
-- [Descargar Script de Base de Datos (.sql)](https://github.com/Matee0802/Proyecto-Programaci-n/releases/download/v1.0/spotcloud.1.sql)
 
 ## Funcionalidades
 
@@ -71,24 +70,22 @@ canciones → albumes → artistas
 
 ## Requisitos del Sistema
 
-* **Sistema Operativo**: Windows 7 en adelante.
-* **Servidor**: XAMPP (MySQL) activo para la base de datos.
-* **Conexión**: Asegúrate de que los datos de conexión en el servidor coincidan con la configuración local de la aplicación.
+- **Sistema Operativo**: Windows 7 en adelante.
+- **Servidor**: XAMPP (MySQL) activo para la base de datos.
+- **Conexión a Internet:**: Necesaria para la conexión con el servidor remoto de base de datos.
 
 ## Cómo Ejecutar
 
-1. **Base de Datos**: Inicia XAMPP, activa MySQL y carga el archivo `.sql` provisto en una base de datos local.
-2. **Ejecución**: Ejecuta el archivo **SpotCloud.exe** directamente.
-
-*(Nota: Si eres desarrollador y deseas modificar el código, necesitarás tener instalado Qt Creator y los módulos de Qt 6 correspondientes).*
+1. **Ejecución**: Simplemente descarga el archivo comprimido, descomprímelo y ejecuta el archivo **SpotCloud.exe**.
+2. **Configuración**: La aplicación se conecta automáticamente al servidor de base de datos remoto configurado.
 
 ## Interfaz y Recursos
 
 La aplicación incluye:
 
-* Navegación superior y vista de álbumes/búsqueda.
-* Reproductor inferior fijo con controles multimedia.
-* Íconos personalizados mediante la fuente MaterialSymbolsOutlined.ttf cargada desde recursos.qrc.
+- Navegación superior y vista de álbumes/búsqueda.
+- Reproductor inferior fijo con controles multimedia.
+- Íconos personalizados mediante la fuente MaterialSymbolsOutlined.ttf cargada desde recursos.qrc.
 
 ## Estado Actual
 
@@ -96,7 +93,7 @@ Actualmente SpotCloud permite navegar por álbumes, buscar contenido y reproduci
 
 ## Autor
 
-* **Mateo Valentino Lugo**
+- **Mateo Valentino Lugo**
 
 ## Nota
 
