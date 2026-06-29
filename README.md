@@ -2,6 +2,11 @@
 
 SpotCloud es una aplicación de escritorio desarrollada en C++ con Qt. El proyecto funciona como un reproductor de música con una interfaz inspirada en plataformas de streaming: permite visualizar álbumes, buscar canciones, reproducir música y controlar la reproducción desde una barra inferior.
 
+## Descargas
+
+- [Descargar SpotCloud (Ejecutable .exe)](AQUÍ_VA_TU_LINK_DEL_RAR)
+- [Descargar Script de Base de Datos (.sql)](AQUÍ_VA_TU_LINK_DE_LA_BASE_DE_DATOS)
+
 ## Funcionalidades
 
 - Visualización de álbumes en la pantalla de inicio.
@@ -17,12 +22,8 @@ SpotCloud es una aplicación de escritorio desarrollada en C++ con Qt. El proyec
 ## Tecnologías Utilizadas
 
 - C++
-- Qt Widgets
-- Qt Multimedia
-- Qt SQL
-- Qt Network
-- MySQL/MariaDB
-- Qt Creator
+- Qt 6
+- MySQL/Base de datos
 
 ## Estructura Del Proyecto
 
@@ -44,20 +45,23 @@ SpotCloud/
 ├── ventanaprincipal.ui
 ├── recursos.qrc
 └── SpotCloud.pro
+
 ```
+
 ## Organización del Proyecto
 
 El código sigue una arquitectura modular para facilitar el mantenimiento y la escalabilidad:
 
-```Models/```: Clases que representan las entidades principales (Usuario, Artista, Album, Cancion, Historial, Colas de reproducción).
+`Models/`: Clases que representan las entidades principales (Usuario, Artista, Album, Cancion, Historial, Colas de reproducción).
 
-```DAO/```: Interfaces e implementaciones para el acceso a datos. Separa la persistencia de la lógica de negocio.
+`DAO/`: Interfaces e implementaciones para el acceso a datos. Separa la persistencia de la lógica de negocio.
 
-```Database/```: Clase Conexion, encargada de gestionar la conexión con el servidor MySQL/MariaDB.
+`Database/`: Clase Conexion, encargada de gestionar la conexión con el servidor MySQL/MariaDB.
 
-```Ventana Principal/```: Interfaz de usuario (ventanaprincipal.h, .cpp, .ui). Gestiona la navegación, búsqueda y el control del reproductor.
+`Ventana Principal/`: Interfaz de usuario (ventanaprincipal.h, .cpp, .ui). Gestiona la navegación, búsqueda y el control del reproductor.
 
 ## Estructura de Base de Datos
+
 El proyecto utiliza una base de datos relacional con las siguientes tablas:
 **usuarios, artistas, albumes, canciones, historial, cola_reproduccion, cola_canciones y usuarios_artistas.**
 
@@ -65,36 +69,26 @@ La jerarquía para la relación entre el contenido es:
 canciones → albumes → artistas
 (Una canción pertenece a un álbum, y un álbum pertenece a un artista).
 
-## Requisitos Técnicos
-**Framework**: Qt 6
+## Requisitos del Sistema
 
-**IDE**: Qt Creator
-
-**Compilador**: Compatible con C++17
-
-**Módulos de Qt**: Widgets, SQL, Multimedia, Network
-
-**Base de Datos**: MySQL o MariaDB
+* **Sistema Operativo**: Windows 7 en adelante.
+* **Servidor**: XAMPP (MySQL) activo para la base de datos.
+* **Conexión**: Asegúrate de que los datos de conexión en el servidor coincidan con la configuración local de la aplicación.
 
 ## Cómo Ejecutar
-**Abrir Proyecto**: Inicia Qt Creator y abre el archivo SpotCloud.pro.
 
-**Configurar Kit**: Selecciona un kit compatible (ej. Desktop Qt MinGW 64-bit).
+1. **Base de Datos**: Inicia XAMPP, activa MySQL y carga el archivo `.sql` provisto en una base de datos local.
+2. **Ejecución**: Ejecuta el archivo **SpotCloud.exe** directamente.
 
-**Base de Datos**: Verifica que tu servidor esté activo y la base de datos configurada.
-
-**Conexión**: Ajusta tus credenciales de base de datos en src/database/Conexion.cpp.
-
-**Compilar**: Selecciona Build y ejecuta el proyecto.
+*(Nota: Si eres desarrollador y deseas modificar el código, necesitarás tener instalado Qt Creator y los módulos de Qt 6 correspondientes).*
 
 ## Interfaz y Recursos
+
 La aplicación incluye:
 
-- Navegación superior y vista de álbumes/búsqueda.
-
-- Reproductor inferior fijo con controles multimedia.
-
-- Íconos personalizados mediante la fuente MaterialSymbolsOutlined.ttf cargada desde recursos.qrc.
+* Navegación superior y vista de álbumes/búsqueda.
+* Reproductor inferior fijo con controles multimedia.
+* Íconos personalizados mediante la fuente MaterialSymbolsOutlined.ttf cargada desde recursos.qrc.
 
 ## Estado Actual
 
@@ -102,7 +96,7 @@ Actualmente SpotCloud permite navegar por álbumes, buscar contenido y reproduci
 
 ## Autor
 
-- **Mateo Valentino Lugo**
+* **Mateo Valentino Lugo**
 
 ## Nota
 
