@@ -12,12 +12,14 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QFrame>
+#include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QScrollArea>
 #include <QtWidgets/QSlider>
 #include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QStackedWidget>
@@ -37,7 +39,6 @@ public:
     QLabel *lblLogo;
     QSpacerItem *horizontalSpacer_NavLeft;
     QPushButton *btnInicio;
-    QPushButton *btnExplorar;
     QPushButton *btnBuscar;
     QSpacerItem *horizontalSpacer_NavRight;
     QStackedWidget *stackedWidget;
@@ -45,11 +46,9 @@ public:
     QVBoxLayout *verticalLayout_Inicio;
     QLabel *lblTituloInicio;
     QLabel *lblSubtituloInicio;
-    QTableView *tablaCanciones;
-    QWidget *paginaExplorar;
-    QVBoxLayout *verticalLayout_Explorar;
-    QLabel *lblTituloExplorar;
-    QTableView *tablaExplorar;
+    QScrollArea *scrollAlbumes;
+    QWidget *contenedorAlbumes;
+    QGridLayout *gridAlbumes;
     QWidget *paginaBuscar;
     QVBoxLayout *verticalLayout_Buscar;
     QLabel *lblTituloBuscar;
@@ -59,7 +58,7 @@ public:
     QVBoxLayout *verticalLayout_Album;
     QLabel *lblTituloAlbum;
     QLabel *lblArtistaAlbum;
-    QTableView *tablaCancionesAlbum;
+    QTableView *tablaCanciones;
     QFrame *frameReproductor;
     QHBoxLayout *horizontalLayout_Reproductor;
     QWidget *widget_Info;
@@ -124,12 +123,6 @@ public:
 
         horizontalLayout_Nav->addWidget(btnInicio);
 
-        btnExplorar = new QPushButton(widgetNav);
-        btnExplorar->setObjectName("btnExplorar");
-        btnExplorar->setStyleSheet(QString::fromUtf8("background: transparent; color: #b3b3b3; border: none;"));
-
-        horizontalLayout_Nav->addWidget(btnExplorar);
-
         btnBuscar = new QPushButton(widgetNav);
         btnBuscar->setObjectName("btnBuscar");
         btnBuscar->setStyleSheet(QString::fromUtf8("background: transparent; color: #b3b3b3; border: none;"));
@@ -168,33 +161,23 @@ public:
 
         verticalLayout_Inicio->addWidget(lblSubtituloInicio);
 
-        tablaCanciones = new QTableView(paginaInicio);
-        tablaCanciones->setObjectName("tablaCanciones");
-        tablaCanciones->setFrameShape(QFrame::Shape::NoFrame);
+        scrollAlbumes = new QScrollArea(paginaInicio);
+        scrollAlbumes->setObjectName("scrollAlbumes");
+        scrollAlbumes->setStyleSheet(QString::fromUtf8("background: transparent; border: none;"));
+        scrollAlbumes->setWidgetResizable(true);
+        contenedorAlbumes = new QWidget();
+        contenedorAlbumes->setObjectName("contenedorAlbumes");
+        contenedorAlbumes->setGeometry(QRect(0, 0, 930, 320));
+        gridAlbumes = new QGridLayout(contenedorAlbumes);
+        gridAlbumes->setObjectName("gridAlbumes");
+        gridAlbumes->setHorizontalSpacing(18);
+        gridAlbumes->setVerticalSpacing(26);
+        gridAlbumes->setContentsMargins(0, 0, 0, 0);
+        scrollAlbumes->setWidget(contenedorAlbumes);
 
-        verticalLayout_Inicio->addWidget(tablaCanciones);
+        verticalLayout_Inicio->addWidget(scrollAlbumes);
 
         stackedWidget->addWidget(paginaInicio);
-        paginaExplorar = new QWidget();
-        paginaExplorar->setObjectName("paginaExplorar");
-        verticalLayout_Explorar = new QVBoxLayout(paginaExplorar);
-        verticalLayout_Explorar->setSpacing(14);
-        verticalLayout_Explorar->setObjectName("verticalLayout_Explorar");
-        verticalLayout_Explorar->setContentsMargins(24, 22, 24, 22);
-        lblTituloExplorar = new QLabel(paginaExplorar);
-        lblTituloExplorar->setObjectName("lblTituloExplorar");
-        lblTituloExplorar->setFont(font1);
-        lblTituloExplorar->setStyleSheet(QString::fromUtf8("color: #FFD700;"));
-
-        verticalLayout_Explorar->addWidget(lblTituloExplorar);
-
-        tablaExplorar = new QTableView(paginaExplorar);
-        tablaExplorar->setObjectName("tablaExplorar");
-        tablaExplorar->setFrameShape(QFrame::Shape::NoFrame);
-
-        verticalLayout_Explorar->addWidget(tablaExplorar);
-
-        stackedWidget->addWidget(paginaExplorar);
         paginaBuscar = new QWidget();
         paginaBuscar->setObjectName("paginaBuscar");
         verticalLayout_Buscar = new QVBoxLayout(paginaBuscar);
@@ -241,11 +224,11 @@ public:
 
         verticalLayout_Album->addWidget(lblArtistaAlbum);
 
-        tablaCancionesAlbum = new QTableView(paginaAlbum);
-        tablaCancionesAlbum->setObjectName("tablaCancionesAlbum");
-        tablaCancionesAlbum->setFrameShape(QFrame::Shape::NoFrame);
+        tablaCanciones = new QTableView(paginaAlbum);
+        tablaCanciones->setObjectName("tablaCanciones");
+        tablaCanciones->setFrameShape(QFrame::Shape::NoFrame);
 
-        verticalLayout_Album->addWidget(tablaCancionesAlbum);
+        verticalLayout_Album->addWidget(tablaCanciones);
 
         stackedWidget->addWidget(paginaAlbum);
 
@@ -375,7 +358,7 @@ public:
 
         retranslateUi(VentanaPrincipal);
 
-        stackedWidget->setCurrentIndex(3);
+        stackedWidget->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(VentanaPrincipal);
@@ -386,11 +369,9 @@ public:
         VentanaPrincipal->setWindowTitle(QCoreApplication::translate("VentanaPrincipal", "SpotCloud", nullptr));
         lblLogo->setText(QCoreApplication::translate("VentanaPrincipal", "SPOTCLOUD", nullptr));
         btnInicio->setText(QCoreApplication::translate("VentanaPrincipal", "Inicio", nullptr));
-        btnExplorar->setText(QCoreApplication::translate("VentanaPrincipal", "Explorar", nullptr));
         btnBuscar->setText(QCoreApplication::translate("VentanaPrincipal", "Buscar", nullptr));
         lblTituloInicio->setText(QCoreApplication::translate("VentanaPrincipal", "Buenas noches", nullptr));
         lblSubtituloInicio->setText(QCoreApplication::translate("VentanaPrincipal", "Tu biblioteca", nullptr));
-        lblTituloExplorar->setText(QCoreApplication::translate("VentanaPrincipal", "Explorar", nullptr));
         lblTituloBuscar->setText(QCoreApplication::translate("VentanaPrincipal", "Buscar", nullptr));
         txtBuscar->setPlaceholderText(QCoreApplication::translate("VentanaPrincipal", "Buscar canciones, albumes o artistas", nullptr));
         lblTituloAlbum->setText(QCoreApplication::translate("VentanaPrincipal", "Album", nullptr));

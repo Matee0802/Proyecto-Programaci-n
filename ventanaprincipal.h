@@ -5,7 +5,17 @@
 #include "database/Conexion.h"
 #include <QMediaPlayer>
 #include <QAudioOutput>
-#include <QtSql/QSqlQueryModel>
+#include <QGridLayout>
+#include <QPushButton>
+#include <QVBoxLayout>
+#include <QSqlQuery>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+#include <QUrl>
+#include <QSqlQueryModel>
+#include <QLabel>
+#include <QPixmap>
+#include <QIcon>
 
 namespace Ui {
 class VentanaPrincipal;
@@ -38,6 +48,12 @@ private:
     void reproducirSiguiente();
     void reproducirAnterior();
     void manejarFinCancion();
+    QNetworkAccessManager *networkManager;
+    QSqlQueryModel *modeloBusqueda;
+    void cargarAlbumesInicio();
+    QWidget *crearCardAlbum(int idAlbum, const QString &titulo, const QString &artista, const QString &rutaPortada);
+    void abrirAlbum(int idAlbum);
+    void buscarContenido(const QString &texto);
 private slots:
     // Agregá esta línea acá abajo:
     void cambiarPosicion(int posicion);
@@ -49,6 +65,7 @@ private slots:
     void cargarYReproducir(int fila);
     void on_btnShuffle_clicked();
     void on_btnRepeat_clicked();
+    void on_tablaBusqueda_doubleClicked(const QModelIndex &index);
 };
 
 #endif // VENTANAPRINCIPAL_H

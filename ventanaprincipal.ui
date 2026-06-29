@@ -97,16 +97,6 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="btnExplorar">
-         <property name="styleSheet">
-          <string notr="true">background: transparent; color: #b3b3b3; border: none;</string>
-         </property>
-         <property name="text">
-          <string>Explorar</string>
-         </property>
-        </widget>
-       </item>
-       <item>
         <widget class="QPushButton" name="btnBuscar">
          <property name="styleSheet">
           <string notr="true">background: transparent; color: #b3b3b3; border: none;</string>
@@ -142,9 +132,6 @@
       </property>
       <widget class="QWidget" name="paginaInicio">
        <layout class="QVBoxLayout" name="verticalLayout_Inicio">
-        <property name="spacing">
-         <number>14</number>
-        </property>
         <property name="leftMargin">
          <number>24</number>
         </property>
@@ -157,6 +144,10 @@
         <property name="bottomMargin">
          <number>22</number>
         </property>
+        <property name="spacing">
+         <number>14</number>
+        </property>
+
         <item>
          <widget class="QLabel" name="lblTituloInicio">
           <property name="font">
@@ -173,6 +164,7 @@
           </property>
          </widget>
         </item>
+
         <item>
          <widget class="QLabel" name="lblSubtituloInicio">
           <property name="styleSheet">
@@ -183,53 +175,45 @@
           </property>
          </widget>
         </item>
+
         <item>
-         <widget class="QTableView" name="tablaCanciones">
-          <property name="frameShape">
-           <enum>QFrame::Shape::NoFrame</enum>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-      <widget class="QWidget" name="paginaExplorar">
-       <layout class="QVBoxLayout" name="verticalLayout_Explorar">
-        <property name="spacing">
-         <number>14</number>
-        </property>
-        <property name="leftMargin">
-         <number>24</number>
-        </property>
-        <property name="topMargin">
-         <number>22</number>
-        </property>
-        <property name="rightMargin">
-         <number>24</number>
-        </property>
-        <property name="bottomMargin">
-         <number>22</number>
-        </property>
-        <item>
-         <widget class="QLabel" name="lblTituloExplorar">
-          <property name="font">
-           <font>
-            <pointsize>20</pointsize>
-            <bold>true</bold>
-           </font>
-          </property>
+         <widget class="QScrollArea" name="scrollAlbumes">
           <property name="styleSheet">
-           <string notr="true">color: #FFD700;</string>
+           <string notr="true">background: transparent; border: none;</string>
           </property>
-          <property name="text">
-           <string>Explorar</string>
+          <property name="widgetResizable">
+           <bool>true</bool>
           </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QTableView" name="tablaExplorar">
-          <property name="frameShape">
-           <enum>QFrame::Shape::NoFrame</enum>
-          </property>
+          <widget class="QWidget" name="contenedorAlbumes">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>0</y>
+             <width>930</width>
+             <height>320</height>
+            </rect>
+           </property>
+           <layout class="QGridLayout" name="gridAlbumes">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <property name="horizontalSpacing">
+             <number>18</number>
+            </property>
+            <property name="verticalSpacing">
+             <number>26</number>
+            </property>
+           </layout>
+          </widget>
          </widget>
         </item>
        </layout>
@@ -336,7 +320,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QTableView" name="tablaCancionesAlbum">
+         <widget class="QTableView" name="tablaCanciones">
           <property name="frameShape">
            <enum>QFrame::Shape::NoFrame</enum>
           </property>
