@@ -1,0 +1,11 @@
+# Archivos de compilación de Qt
+build/
+build-*/
+*.o
+*.exe
+*.dll
+
+# Archivos de configuración de Qt Creator
+.qtcreator/
+*.user
+.qmake.stash
