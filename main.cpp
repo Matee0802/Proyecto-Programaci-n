@@ -53,6 +53,9 @@ int main(int argc, char *argv[])
     a.setStyleSheet(estilo);
 
     VentanaPrincipal w;
+    // Tamaño inicial estable para pantallas distintas; el usuario puede ampliar la ventana.
+    w.resize(1120, 680);
+    w.setMinimumSize(960, 600);
     w.show();
     return a.exec();
 }

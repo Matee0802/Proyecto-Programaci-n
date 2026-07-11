@@ -1,15 +1,15 @@
-QT += core gui widgets sql multimedia
+QT += core gui widgets sql multimedia network
 
 TARGET = SpotCloud
 TEMPLATE = app
 
-CONFIG += c++11
+CONFIG += c++17
 
 # Incluimos tus carpetas del proyecto
 INCLUDEPATH += include
 
 
-# --- CONFIGURACIÓN DE MYSQL ---
+# --- CONFIGURACIÃƒâ€œN DE MYSQL ---
 QT += sql
 
 # Agregamos tus cabeceras
@@ -39,6 +39,7 @@ HEADERS += include/database/Conexion.h \
            include/dao/UsuarioArtistaDAOImpl.h \
            include/dao/UsuarioDAO.h \
            include/dao/UsuarioDAOImpl.h \
+           include/dao/SpotCloudDAO.h \
            ventanaprincipal.h
 
 # Agregamos tus fuentes
@@ -47,6 +48,7 @@ SOURCES += main.cpp \
            src/dao/ArtistaDAOImpl.cpp \
            src/dao/CancionDAOImpl.cpp \
            src/dao/UsuarioDAOImpl.cpp \
+           src/dao/SpotCloudDAO.cpp \
            src/database/Conexion.cpp \
            src/dao/ColaCancionesDAOImpl.cpp \
            src/dao/ColaReproduccionDAOImpl.cpp \

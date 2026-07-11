@@ -16,6 +16,17 @@
 #include <QLabel>
 #include <QPixmap>
 #include <QIcon>
+#include <functional>
+#include <QDateTime>
+#include <QMimeDatabase>
+#include <QFileInfo>
+#include <QFileDialog>
+#include <QResizeEvent>
+#include <QNetworkInterface>
+#include <QVector>
+#include <QFrame>
+
+class SpotCloudDAO;
 
 namespace Ui {
 class VentanaPrincipal;
@@ -32,18 +43,23 @@ public:
 private:
     Ui::VentanaPrincipal *ui;
     Conexion bd;
+    SpotCloudDAO *dao = nullptr; // Acceso a datos: la ventana no contiene SQL.
     QMediaPlayer *reproductor;
     QAudioOutput *salidaAudio;
-    // --- AGREGÁ ESTO ACÁ ABAJO ---
     QSqlQueryModel *modelo; // El modelo para acceder a la BD
     int filaActual = 0;
     bool estaCargando = false;
 
     bool modoAleatorio = false;
     int modoRepeticion = 0;
+    int idUsuarioActual = 0;
+    QVector<int> colaReproduccion;
+    QFrame *panelSesion = nullptr;
+    QFrame *panelFila = nullptr;
+    QPushButton *btnPerfil = nullptr;
     // 0 = sin repetir
     // 1 = repetir lista
-    // 2 = repetir una canción
+    // 2 = repetir una canciÃ³n
     void cargarCancion(int fila);
     void reproducirSiguiente();
     void reproducirAnterior();
@@ -54,8 +70,26 @@ private:
     QWidget *crearCardAlbum(int idAlbum, const QString &titulo, const QString &artista, const QString &rutaPortada);
     void abrirAlbum(int idAlbum);
     void buscarContenido(const QString &texto);
+    void cargarCombosAdmin();
+    void guardarArtista();
+    void guardarAlbum();
+    void guardarCancion();
+
+    //  archivos locales / Supabase / eliminar ---
+    void seleccionarMp3Local();
+    void seleccionarPortadaLocal();
+    void cargarComboEliminar();
+    void cargarElementosEliminar();
+    void eliminarContenido();
+    QUrl crearUrlAudio(const QString &ruta);
+    bool hayConexionRed() const;
+    bool requiereSesion();
+    void mostrarFila();
+    void configurarPasoAdmin();
+    void agregarFila(int fila);
+
+
 private slots:
-    // Agregá esta línea acá abajo:
     void cambiarPosicion(int posicion);
     void on_tablaCanciones_doubleClicked(const QModelIndex &index);
     void actualizarEstadoReproduccion(QMediaPlayer::PlaybackState estado); // Para detectar cambios

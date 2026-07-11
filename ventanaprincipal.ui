@@ -6,15 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1000</width>
-    <height>600</height>
+    <width>1387</width>
+    <height>1150</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>SpotCloud</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout_Main" stretch="0,1,0">
+   <layout class="QVBoxLayout" name="verticalLayout_Main" stretch="0,0,0">
     <property name="spacing">
      <number>0</number>
     </property>
@@ -99,10 +99,20 @@
        <item>
         <widget class="QPushButton" name="btnBuscar">
          <property name="styleSheet">
-          <string notr="true">background: transparent; color: #b3b3b3; border: none;</string>
+          <string notr="true">background: transparent; color: white; border: none; font-weight: bold;</string>
          </property>
          <property name="text">
           <string>Buscar</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="btnAdmin">
+         <property name="styleSheet">
+          <string notr="true">background: transparent; color: white; border: none; font-weight: bold;</string>
+         </property>
+         <property name="text">
+          <string>Cargar</string>
          </property>
         </widget>
        </item>
@@ -119,6 +129,22 @@
          </property>
         </spacer>
        </item>
+       <item>
+        <widget class="QPushButton" name="btnPerfil">
+         <property name="minimumSize">
+          <size>
+           <width>132</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background: transparent; color: #d9d9d9; border: none; font-weight: bold;</string>
+         </property>
+         <property name="text">
+          <string>Iniciar sesión</string>
+         </property>
+        </widget>
+       </item>
       </layout>
      </widget>
     </item>
@@ -128,10 +154,13 @@
        <string notr="true">background-color: #121212; color: white;</string>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>3</number>
       </property>
       <widget class="QWidget" name="paginaInicio">
        <layout class="QVBoxLayout" name="verticalLayout_Inicio">
+        <property name="spacing">
+         <number>14</number>
+        </property>
         <property name="leftMargin">
          <number>24</number>
         </property>
@@ -144,10 +173,6 @@
         <property name="bottomMargin">
          <number>22</number>
         </property>
-        <property name="spacing">
-         <number>14</number>
-        </property>
-
         <item>
          <widget class="QLabel" name="lblTituloInicio">
           <property name="font">
@@ -164,7 +189,6 @@
           </property>
          </widget>
         </item>
-
         <item>
          <widget class="QLabel" name="lblSubtituloInicio">
           <property name="styleSheet">
@@ -175,7 +199,6 @@
           </property>
          </widget>
         </item>
-
         <item>
          <widget class="QScrollArea" name="scrollAlbumes">
           <property name="styleSheet">
@@ -189,8 +212,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>930</width>
-             <height>320</height>
+             <width>38</width>
+             <height>16</height>
             </rect>
            </property>
            <layout class="QGridLayout" name="gridAlbumes">
@@ -324,6 +347,557 @@
           <property name="frameShape">
            <enum>QFrame::Shape::NoFrame</enum>
           </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="paginaAdmin">
+       <layout class="QVBoxLayout" name="verticalLayout_Admin">
+        <property name="spacing">
+         <number>18</number>
+        </property>
+        <property name="leftMargin">
+         <number>24</number>
+        </property>
+        <property name="topMargin">
+         <number>22</number>
+        </property>
+        <property name="rightMargin">
+         <number>24</number>
+        </property>
+        <property name="bottomMargin">
+         <number>22</number>
+        </property>
+        <item>
+         <widget class="QLabel" name="lblTituloAdmin">
+          <property name="font">
+           <font>
+            <pointsize>28</pointsize>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color: white;</string>
+          </property>
+          <property name="text">
+           <string>Cargar contenido</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_AdminCards">
+          <property name="spacing">
+           <number>12</number>
+          </property>
+          <item>
+           <widget class="QFrame" name="frameEliminarContenido">
+            <property name="autoFillBackground">
+             <bool>false</bool>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: #181818; border: 1px solid #282828; border-radius: 6px;</string>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_EliminarContenido" stretch="0,0,0,0,0">
+             <property name="spacing">
+              <number>10</number>
+             </property>
+             <property name="leftMargin">
+              <number>18</number>
+             </property>
+             <property name="topMargin">
+              <number>18</number>
+             </property>
+             <property name="rightMargin">
+              <number>18</number>
+             </property>
+             <property name="bottomMargin">
+              <number>18</number>
+             </property>
+             <item>
+              <widget class="QLabel" name="lblEliminarContenido">
+               <property name="font">
+                <font>
+                 <pointsize>16</pointsize>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: white; border: none;</string>
+               </property>
+               <property name="text">
+                <string>Eliminar contenido</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QComboBox" name="comboTipoEliminar"/>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="txtFiltroEliminar">
+               <property name="styleSheet">
+                <string notr="true">background-color: #101010; color: white; border: 1px solid #282828; border-radius: 4px; padding: 8px;</string>
+               </property>
+               <property name="placeholderText">
+                <string>Filtrar por nombre</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QComboBox" name="comboElementoEliminar"/>
+             </item>
+             <item>
+              <widget class="QPushButton" name="btnEliminarContenido">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>42</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: #b00020; color: white; border: none; border-radius: 6px; font-weight: bold;</string>
+               </property>
+               <property name="text">
+                <string>Eliminar</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btnPasoArtista">
+            <property name="minimumSize">
+             <size>
+              <width>185</width>
+              <height>86</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton { text-align:left; padding:12px; background:#1b1b1b; color:#f5f5f5; border:1px solid #333; border-radius:8px; font-weight:bold; } QPushButton:checked { border:1px solid #ffd700; background:#242424; } QPushButton:hover { background:#242424; }</string>
+            </property>
+            <property name="text">
+             <string>1
+Artista o grupo
+Crear artista</string>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btnPasoAlbum">
+            <property name="minimumSize">
+             <size>
+              <width>185</width>
+              <height>86</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton { text-align:left; padding:12px; background:#1b1b1b; color:#f5f5f5; border:1px solid #333; border-radius:8px; font-weight:bold; } QPushButton:checked { border:1px solid #ffd700; background:#242424; } QPushButton:hover { background:#242424; }</string>
+            </property>
+            <property name="text">
+             <string>2
+Álbum
+Cargar portada</string>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btnPasoCancion">
+            <property name="minimumSize">
+             <size>
+              <width>185</width>
+              <height>86</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton { text-align:left; padding:12px; background:#1b1b1b; color:#f5f5f5; border:1px solid #333; border-radius:8px; font-weight:bold; } QPushButton:checked { border:1px solid #ffd700; background:#242424; } QPushButton:hover { background:#242424; }</string>
+            </property>
+            <property name="text">
+             <string>3
+Canción
+Subir MP3</string>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btnPasoEliminar">
+            <property name="minimumSize">
+             <size>
+              <width>185</width>
+              <height>86</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton { text-align:left; padding:12px; background:#1b1b1b; color:#f5f5f5; border:1px solid #333; border-radius:8px; font-weight:bold; } QPushButton:checked { border:1px solid #ffd700; background:#242424; } QPushButton:hover { background:#242424; }</string>
+            </property>
+            <property name="text">
+             <string>Eliminar contenido
+
+Borrar contenido</string>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QFrame" name="frameNuevoArtista">
+            <property name="styleSheet">
+             <string notr="true">background-color: #181818; border: 1px solid #282828; border-radius: 6px;</string>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_NuevoArtista">
+             <property name="spacing">
+              <number>10</number>
+             </property>
+             <property name="leftMargin">
+              <number>18</number>
+             </property>
+             <property name="topMargin">
+              <number>18</number>
+             </property>
+             <property name="rightMargin">
+              <number>18</number>
+             </property>
+             <property name="bottomMargin">
+              <number>18</number>
+             </property>
+             <item>
+              <widget class="QLabel" name="lblNuevoArtista">
+               <property name="font">
+                <font>
+                 <pointsize>16</pointsize>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: white; border: none;</string>
+               </property>
+               <property name="text">
+                <string>Nuevo artista</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="txtNombreArtista">
+               <property name="styleSheet">
+                <string notr="true">background-color: #101010; color: white; border: 1px solid #282828; border-radius: 4px; padding: 8px;</string>
+               </property>
+               <property name="placeholderText">
+                <string>Nombre</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QTextEdit" name="txtBioArtista">
+               <property name="styleSheet">
+                <string notr="true">background-color: #101010; color: white; border: 1px solid #282828; border-radius: 4px; padding: 8px;</string>
+               </property>
+               <property name="placeholderText">
+                <string>Biografia corta</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="txtGeneroArtista">
+               <property name="styleSheet">
+                <string notr="true">background-color: #101010; color: white; border: 1px solid #282828; border-radius: 4px; padding: 8px;</string>
+               </property>
+               <property name="placeholderText">
+                <string>Genero</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="verticalSpacer_Artista">
+               <property name="orientation">
+                <enum>Qt::Orientation::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QPushButton" name="btnGuardarArtista">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>42</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: #FFD700; color: black; border: none; border-radius: 6px; font-weight: bold;</string>
+               </property>
+               <property name="text">
+                <string>Guardar artista</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QFrame" name="frameNuevoAlbum">
+            <property name="styleSheet">
+             <string notr="true">background-color: #181818; border: 1px solid #282828; border-radius: 6px;</string>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_NuevoAlbum">
+             <property name="spacing">
+              <number>10</number>
+             </property>
+             <property name="leftMargin">
+              <number>18</number>
+             </property>
+             <property name="topMargin">
+              <number>18</number>
+             </property>
+             <property name="rightMargin">
+              <number>18</number>
+             </property>
+             <property name="bottomMargin">
+              <number>18</number>
+             </property>
+             <item>
+              <widget class="QLabel" name="lblNuevoAlbum">
+               <property name="font">
+                <font>
+                 <pointsize>16</pointsize>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: white; border: none;</string>
+               </property>
+               <property name="text">
+                <string>Nuevo album</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="txtTituloAlbum">
+               <property name="styleSheet">
+                <string notr="true">background-color: #101010; color: white; border: 1px solid #282828; border-radius: 4px; padding: 8px;</string>
+               </property>
+               <property name="placeholderText">
+                <string>Titulo</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QSpinBox" name="spinAnioAlbum">
+               <property name="styleSheet">
+                <string notr="true">background-color: #101010; color: white; border: 1px solid #282828; border-radius: 4px; padding: 8px;</string>
+               </property>
+               <property name="minimum">
+                <number>1900</number>
+               </property>
+               <property name="maximum">
+                <number>2100</number>
+               </property>
+               <property name="value">
+                <number>2026</number>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QComboBox" name="comboArtistasAlbum">
+               <property name="styleSheet">
+                <string notr="true">background-color: #101010; color: white; border: 1px solid #282828; border-radius: 4px; padding: 8px;</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="txtPortadaAlbum">
+               <property name="styleSheet">
+                <string notr="true">background-color: #101010; color: white; border: 1px solid #282828; border-radius: 4px; padding: 8px;</string>
+               </property>
+               <property name="placeholderText">
+                <string>URL de portada</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_PortadaLocal">
+               <item>
+                <widget class="QPushButton" name="btnSeleccionarPortadaLocal">
+                 <property name="text">
+                  <string>Elegir portada local</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <spacer name="verticalSpacer_Album">
+               <property name="orientation">
+                <enum>Qt::Orientation::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QPushButton" name="btnGuardarAlbum">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>42</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: #FFD700; color: black; border: none; border-radius: 6px; font-weight: bold;</string>
+               </property>
+               <property name="text">
+                <string>Guardar album</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QFrame" name="frameNuevaCancion">
+            <property name="styleSheet">
+             <string notr="true">background-color: #181818; border: 1px solid #282828; border-radius: 6px;</string>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_NuevaCancion">
+             <property name="spacing">
+              <number>10</number>
+             </property>
+             <property name="leftMargin">
+              <number>18</number>
+             </property>
+             <property name="topMargin">
+              <number>18</number>
+             </property>
+             <property name="rightMargin">
+              <number>18</number>
+             </property>
+             <property name="bottomMargin">
+              <number>18</number>
+             </property>
+             <item>
+              <widget class="QLabel" name="lblNuevaCancion">
+               <property name="font">
+                <font>
+                 <pointsize>16</pointsize>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: white; border: none;</string>
+               </property>
+               <property name="text">
+                <string>Nueva cancion</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="txtTituloCancion">
+               <property name="styleSheet">
+                <string notr="true">background-color: #101010; color: white; border: 1px solid #282828; border-radius: 4px; padding: 8px;</string>
+               </property>
+               <property name="placeholderText">
+                <string>Titulo</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QTimeEdit" name="timeDuracionCancion">
+               <property name="styleSheet">
+                <string notr="true">background-color: #101010; color: white; border: 1px solid #282828; border-radius: 4px; padding: 8px;</string>
+               </property>
+               <property name="displayFormat">
+                <string>HH:mm:ss</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QComboBox" name="comboAlbumCancion">
+               <property name="styleSheet">
+                <string notr="true">background-color: #101010; color: white; border: 1px solid #282828; border-radius: 4px; padding: 8px;</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="txtMp3Cancion">
+               <property name="styleSheet">
+                <string notr="true">background-color: #101010; color: white; border: 1px solid #282828; border-radius: 4px; padding: 8px;</string>
+               </property>
+               <property name="placeholderText">
+                <string>URL del MP3</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_Mp3Local">
+               <item>
+                <widget class="QPushButton" name="btnSeleccionarMp3Local">
+                 <property name="text">
+                  <string>Elegir MP3 local</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <spacer name="verticalSpacer_Cancion">
+               <property name="orientation">
+                <enum>Qt::Orientation::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QPushButton" name="btnGuardarCancion">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>42</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: #FFD700; color: black; border: none; border-radius: 6px; font-weight: bold;</string>
+               </property>
+               <property name="text">
+                <string>Guardar cancion</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QStackedWidget" name="stackedAdmin">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>270</height>
+           </size>
+          </property>
+          <widget class="QWidget" name="paginaAdminVacia"/>
          </widget>
         </item>
        </layout>
