@@ -140,7 +140,7 @@ public:
     {
         if (VentanaPrincipal->objectName().isEmpty())
             VentanaPrincipal->setObjectName("VentanaPrincipal");
-        VentanaPrincipal->resize(1387, 1150);
+        VentanaPrincipal->resize(1623, 1150);
         centralwidget = new QWidget(VentanaPrincipal);
         centralwidget->setObjectName("centralwidget");
         verticalLayout_Main = new QVBoxLayout(centralwidget);

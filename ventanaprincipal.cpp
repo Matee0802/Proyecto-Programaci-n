@@ -1,6 +1,12 @@
 #include "ventanaprincipal.h"
 #include "ui_ventanaprincipal.h"
-#include "dao/SpotCloudDAO.h"
+#include "dao/AlbumDAOImpl.h"
+#include "dao/ArtistaDAOImpl.h"
+#include "dao/CancionDAOImpl.h"
+#include "dao/UsuarioDAOImpl.h"
+#include "models/Album.h"
+#include "models/Artista.h"
+#include "models/Cancion.h"
 #include "../../include/database/conexion.h"
 #include <QtSql/QSqlQueryModel>
 #include <QtSql/QSqlError>
@@ -119,9 +125,13 @@ VentanaPrincipal::VentanaPrincipal(QWidget *parent)
     ui->tablaBusqueda->setModel(modeloBusqueda);
 
     if (bd.conectar()) {
-        dao = new SpotCloudDAO(bd.getDB());
+        albumDAO = new AlbumDAOImpl();
+        artistaDAO = new ArtistaDAOImpl();
+        cancionDAO = new CancionDAOImpl();
+        usuarioDAO = new UsuarioDAOImpl();
+
         delete modelo;
-        modelo = dao->modeloCanciones(this);
+        modelo = cancionDAO->modeloCanciones(this);
 
         if (modelo->lastError().isValid()) {
             qDebug() << "Error en consulta:" << modelo->lastError().text();
@@ -386,8 +396,8 @@ void VentanaPrincipal::cargarAlbumesInicio()
         delete item;
     }
 
-    if (!dao) return;
-    const QVector<AlbumResumen> albumes = dao->albumesDisponibles(!hayConexionRed());
+    if (!albumDAO) return;
+    const QVector<AlbumResumen> albumes = albumDAO->listarDisponibles(!hayConexionRed());
 
     int fila = 0;
     int columna = 0;
@@ -485,9 +495,9 @@ QWidget *VentanaPrincipal::crearCardAlbum(int idAlbum, const QString &titulo, co
 
 void VentanaPrincipal::abrirAlbum(int idAlbum)
 {
-    if (!dao) return;
+    if (!cancionDAO) return;
     delete modelo;
-    modelo = dao->modeloCanciones(this, idAlbum);
+    modelo = cancionDAO->modeloCanciones(this, idAlbum);
 
     if (modelo->lastError().isValid()) {
         qDebug() << "Error abriendo album:" << modelo->lastError().text();
@@ -511,9 +521,9 @@ void VentanaPrincipal::buscarContenido(const QString &texto)
         return;
     }
 
-    if (!dao) return;
+    if (!cancionDAO) return;
     delete modeloBusqueda;
-    modeloBusqueda = dao->modeloBusqueda(this, filtro);
+    modeloBusqueda = cancionDAO->modeloBusqueda(this, filtro);
     ui->tablaBusqueda->setModel(modeloBusqueda);
 
     ui->tablaBusqueda->hideColumn(0);
@@ -560,9 +570,9 @@ void VentanaPrincipal::cargarCombosAdmin()
     ui->comboArtistasAlbum->clear();
     ui->comboAlbumCancion->clear();
 
-    if (!dao) return;
-    for (const ElementoAdmin &artista : dao->artistas()) ui->comboArtistasAlbum->addItem(artista.nombre, artista.id);
-    for (const ElementoAdmin &album : dao->albumes()) ui->comboAlbumCancion->addItem(album.nombre, album.id);
+    if (!artistaDAO || !albumDAO) return;
+    for (const ElementoAdmin &artista : artistaDAO->listarParaCombo()) ui->comboArtistasAlbum->addItem(artista.nombre, artista.id);
+    for (const ElementoAdmin &album : albumDAO->listarParaCombo()) ui->comboAlbumCancion->addItem(album.nombre, album.id);
 }
 // Guardar nuevo artista
 void VentanaPrincipal::guardarArtista()
@@ -576,8 +586,16 @@ void VentanaPrincipal::guardarArtista()
         return;
     }
 
-    if (!dao || !dao->crearArtista(nombre, bio, genero)) {
-        QMessageBox::critical(this, "Error", dao ? dao->ultimoError() : "No hay conexión a la base de datos.");
+    if (!artistaDAO) {
+        QMessageBox::critical(this, "Error", "No hay conexión a la base de datos.");
+        return;
+    }
+
+    Artista artista(nombre.toStdString(), bio.toStdString(), genero.toStdString());
+    artistaDAO->insertar(artista);
+
+    if (!artistaDAO->ultimoError().isEmpty()) {
+        QMessageBox::critical(this, "Error", artistaDAO->ultimoError());
         return;
     }
 
@@ -602,8 +620,16 @@ void VentanaPrincipal::guardarAlbum()
         return;
     }
 
-    if (!dao || !dao->crearAlbum(titulo, anio, idArtista, portada)) {
-        QMessageBox::critical(this, "Error", dao ? dao->ultimoError() : "No hay conexión a la base de datos.");
+    if (!albumDAO) {
+        QMessageBox::critical(this, "Error", "No hay conexión a la base de datos.");
+        return;
+    }
+
+    Album album(titulo.toStdString(), anio, idArtista, portada.toStdString(), idUsuarioActual);
+    albumDAO->insertar(album);
+
+    if (!albumDAO->ultimoError().isEmpty()) {
+        QMessageBox::critical(this, "Error", albumDAO->ultimoError());
         return;
     }
 
@@ -629,8 +655,16 @@ void VentanaPrincipal::guardarCancion()
         return;
     }
 
-    if (!dao || !dao->crearCancion(titulo, duracion, idAlbum, mp3)) {
-        QMessageBox::critical(this, "Error", dao ? dao->ultimoError() : "No hay conexión a la base de datos.");
+    if (!cancionDAO) {
+        QMessageBox::critical(this, "Error", "No hay conexión a la base de datos.");
+        return;
+    }
+
+    Cancion cancion(titulo.toStdString(), duracion.toStdString(), idAlbum, mp3.toStdString());
+    cancionDAO->insertar(cancion);
+
+    if (!cancionDAO->ultimoError().isEmpty()) {
+        QMessageBox::critical(this, "Error", cancionDAO->ultimoError());
         return;
     }
 
@@ -698,8 +732,14 @@ void VentanaPrincipal::cargarElementosEliminar()
 
     QString tipo = ui->comboTipoEliminar->currentText();
     QString filtro = ui->txtFiltroEliminar->text().trimmed();
-    if (!dao) return;
-    for (const ElementoAdmin &elemento : dao->elementos(tipo, filtro)) ui->comboElementoEliminar->addItem(elemento.nombre, elemento.id);
+    if (!cancionDAO || !albumDAO || !artistaDAO) return;
+
+    QVector<ElementoAdmin> lista;
+    if (tipo == "Cancion") lista = cancionDAO->buscarPorTitulo(filtro);
+    else if (tipo == "Album") lista = albumDAO->buscarPorTitulo(filtro);
+    else lista = artistaDAO->buscarPorNombre(filtro);
+
+    for (const ElementoAdmin &elemento : lista) ui->comboElementoEliminar->addItem(elemento.nombre, elemento.id);
 }
 void VentanaPrincipal::eliminarContenido()
 {
@@ -716,9 +756,28 @@ void VentanaPrincipal::eliminarContenido()
 
     if (respuesta != QMessageBox::Yes) return;
 
+    if (!cancionDAO || !albumDAO || !artistaDAO) return;
+
     QString motivo;
-    if (!dao || !dao->eliminar(tipo, id, &motivo)) {
-        QMessageBox::warning(this, "No se puede eliminar", motivo.isEmpty() && dao ? dao->ultimoError() : motivo);
+    if (tipo == "Cancion") {
+        Cancion cancion;
+        cancion.setId(id);
+        cancionDAO->eliminar(cancion);
+        motivo = cancionDAO->ultimoError();
+    } else if (tipo == "Album") {
+        Album album;
+        album.setIdAlbum(id);
+        albumDAO->eliminar(album);
+        motivo = albumDAO->ultimoError();
+    } else {
+        Artista artista;
+        artista.setId(id);
+        artistaDAO->eliminar(artista);
+        motivo = artistaDAO->ultimoError();
+    }
+
+    if (!motivo.isEmpty()) {
+        QMessageBox::warning(this, "No se puede eliminar", motivo);
         return;
     }
 
@@ -732,7 +791,7 @@ void VentanaPrincipal::eliminarContenido()
 bool VentanaPrincipal::requiereSesion()
 {
     if (idUsuarioActual > 0) return true;
-    if (!dao) { QMessageBox::warning(this, "Sin conexión", "No se pudo conectar a la base de datos."); return false; }
+    if (!usuarioDAO) { QMessageBox::warning(this, "Sin conexión", "No se pudo conectar a la base de datos."); return false; }
     if (panelSesion) { panelSesion->raise(); panelSesion->show(); return false; }
 
     panelSesion = new QFrame(ui->centralwidget);
@@ -753,8 +812,8 @@ bool VentanaPrincipal::requiereSesion()
     auto *cabecera = new QHBoxLayout; cabecera->addWidget(marca); cabecera->addStretch(); cabecera->addWidget(cerrar);
     layout->addLayout(cabecera); layout->addWidget(titulo); layout->addWidget(descripcion); layout->addWidget(nombre); layout->addWidget(correo); layout->addWidget(clave); layout->addWidget(entrar); layout->addWidget(registro); layout->addWidget(volver); layout->addStretch();
     connect(cerrar, &QPushButton::clicked, panelSesion, &QWidget::hide);
-    const QMetaObject::Connection loginConexion = connect(entrar, &QPushButton::clicked, this, [this, correo, clave]() { const UsuarioSesion sesion = dao->iniciarSesion(correo->text(), clave->text()); if (!sesion.valido()) { QMessageBox::warning(this, "Datos incorrectos", "Revisá el correo y la contraseña."); return; } idUsuarioActual = sesion.id; if (btnPerfil) { btnPerfil->setText("●  " + sesion.nombre); btnPerfil->setStyleSheet("QPushButton { background:transparent; color:#d9d9d9; border:none; padding:7px 10px; } QPushButton:hover { color:#ffd700; }"); } panelSesion->hide(); });
-    connect(registro, &QPushButton::clicked, this, [this, titulo, descripcion, nombre, correo, clave, entrar, registro, volver, loginConexion]() { disconnect(loginConexion); titulo->setText("Crear cuenta"); descripcion->setText("Completá tus datos para crear tu cuenta."); nombre->show(); registro->hide(); volver->show(); entrar->setText("Crear cuenta"); connect(entrar, &QPushButton::clicked, this, [this, nombre, correo, clave]() { QString motivo; if (nombre->text().trimmed().isEmpty()) { QMessageBox::warning(this, "Falta información", "Ingresá tu nombre."); return; } if (dao->registrar(nombre->text(), correo->text(), clave->text(), &motivo)) { QMessageBox::information(this, "Cuenta creada", "Tu cuenta fue creada. Volvé a iniciar sesión."); } else QMessageBox::warning(this, "No se pudo crear", motivo); }); });
+    const QMetaObject::Connection loginConexion = connect(entrar, &QPushButton::clicked, this, [this, correo, clave]() { const UsuarioSesion sesion = usuarioDAO->iniciarSesion(correo->text(), clave->text()); if (!sesion.valido()) { QMessageBox::warning(this, "Datos incorrectos", "Revisá el correo y la contraseña."); return; } idUsuarioActual = sesion.id; if (btnPerfil) { btnPerfil->setText("●  " + sesion.nombre); btnPerfil->setStyleSheet("QPushButton { background:transparent; color:#d9d9d9; border:none; padding:7px 10px; } QPushButton:hover { color:#ffd700; }"); } panelSesion->hide(); });
+    connect(registro, &QPushButton::clicked, this, [this, titulo, descripcion, nombre, correo, clave, entrar, registro, volver, loginConexion]() { disconnect(loginConexion); titulo->setText("Crear cuenta"); descripcion->setText("Completá tus datos para crear tu cuenta."); nombre->show(); registro->hide(); volver->show(); entrar->setText("Crear cuenta"); connect(entrar, &QPushButton::clicked, this, [this, nombre, correo, clave]() { QString motivo; if (nombre->text().trimmed().isEmpty()) { QMessageBox::warning(this, "Falta información", "Ingresá tu nombre."); return; } if (usuarioDAO->registrar(nombre->text(), correo->text(), clave->text(), &motivo)) { QMessageBox::information(this, "Cuenta creada", "Tu cuenta fue creada. Volvé a iniciar sesión."); } else QMessageBox::warning(this, "No se pudo crear", motivo); }); });
     connect(volver, &QPushButton::clicked, this, [this] { panelSesion->hide(); panelSesion->deleteLater(); panelSesion = nullptr; requiereSesion(); });
     panelSesion->show(); panelSesion->raise();
     return false;
@@ -841,5 +900,10 @@ bool VentanaPrincipal::hayConexionRed() const
 
 VentanaPrincipal::~VentanaPrincipal()
 {
+    delete albumDAO;
+    delete artistaDAO;
+    delete cancionDAO;
+    delete usuarioDAO;
     delete ui;
 }
+

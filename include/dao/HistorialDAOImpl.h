@@ -11,3 +11,4 @@ public:
     void eliminar(Historial h) override;
 };
 #endif
+

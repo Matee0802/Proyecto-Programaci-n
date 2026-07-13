@@ -4,6 +4,7 @@ include/dao/ArtistaDAO.h
 include/dao/ArtistaDAOImpl.h
 include/dao/CancionDAO.h
 include/dao/CancionDAOImpl.h
+include/dao/DTOs.h
 include/dao/ColaCancionesDAO.h
 include/dao/ColaCancionesDAOImpl.h
 include/dao/ColaReproduccionDAO.h
@@ -45,3 +46,4 @@ src/models/UsuarioArtista.cpp
 ventanaprincipal.cpp
 ventanaprincipal.h
 ventanaprincipal.ui
+

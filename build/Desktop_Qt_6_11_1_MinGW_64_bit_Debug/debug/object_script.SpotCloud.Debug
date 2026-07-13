@@ -3,7 +3,6 @@ debug/AlbumDAOImpl.o
 debug/ArtistaDAOImpl.o
 debug/CancionDAOImpl.o
 debug/UsuarioDAOImpl.o
-debug/SpotCloudDAO.o
 debug/Conexion.o
 debug/ColaCancionesDAOImpl.o
 debug/ColaReproduccionDAOImpl.o

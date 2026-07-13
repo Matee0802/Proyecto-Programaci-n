@@ -6,3 +6,4 @@
 //Creamos la clase UsuarioArtistaDAO que hereda del DAO principal
 class UsuarioArtistaDAO : public DAO<UsuarioArtista> {};
 #endif
+

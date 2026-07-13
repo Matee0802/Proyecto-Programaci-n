@@ -37,3 +37,4 @@ void Conexion::desconectar()
         db.close();
     }
 }
+

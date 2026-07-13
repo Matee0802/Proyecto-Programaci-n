@@ -3,7 +3,6 @@ release/AlbumDAOImpl.o
 release/ArtistaDAOImpl.o
 release/CancionDAOImpl.o
 release/UsuarioDAOImpl.o
-release/SpotCloudDAO.o
 release/Conexion.o
 release/ColaCancionesDAOImpl.o
 release/ColaReproduccionDAOImpl.o

@@ -6,3 +6,4 @@
 //Creamos la clase ColaCancionesDAO que hereda del DAO principal
 class ColaCancionesDAO : public DAO<ColaCanciones> {};
 #endif
+

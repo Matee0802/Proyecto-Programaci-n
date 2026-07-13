@@ -11,3 +11,4 @@ public:
     virtual void eliminar(T obj) = 0;
 };
 #endif
+

@@ -6,3 +6,4 @@
 //Creamos la clase HistorialDAO que hereda del DAO principal
 class HistorialDAO : public DAO<Historial> {};
 #endif
+

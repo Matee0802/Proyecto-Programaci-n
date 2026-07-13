@@ -26,7 +26,10 @@
 #include <QVector>
 #include <QFrame>
 
-class SpotCloudDAO;
+class AlbumDAOImpl;
+class ArtistaDAOImpl;
+class CancionDAOImpl;
+class UsuarioDAOImpl;
 
 namespace Ui {
 class VentanaPrincipal;
@@ -43,7 +46,11 @@ public:
 private:
     Ui::VentanaPrincipal *ui;
     Conexion bd;
-    SpotCloudDAO *dao = nullptr; // Acceso a datos: la ventana no contiene SQL.
+    // Acceso a datos: la ventana no contiene SQL, cada DAO se encarga de su propia tabla.
+    AlbumDAOImpl *albumDAO = nullptr;
+    ArtistaDAOImpl *artistaDAO = nullptr;
+    CancionDAOImpl *cancionDAO = nullptr;
+    UsuarioDAOImpl *usuarioDAO = nullptr;
     QMediaPlayer *reproductor;
     QAudioOutput *salidaAudio;
     QSqlQueryModel *modelo; // El modelo para acceder a la BD
@@ -103,3 +110,4 @@ private slots:
 };
 
 #endif // VENTANAPRINCIPAL_H
+

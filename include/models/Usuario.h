@@ -28,3 +28,4 @@ public:
     void setPassword(string p);
 };
 #endif
+

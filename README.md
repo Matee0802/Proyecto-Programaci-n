@@ -9,11 +9,13 @@ SpotCloud es una aplicación de escritorio desarrollada en C++ con Qt. El proyec
 ## Funcionalidades
 
 - Visualización de álbumes en la pantalla de inicio.
-- Portadas de álbumes cargadas desde rutas locales o URLs externas.
+- Login/Registro de usuarios.
+- Agregar portadas de álbumes cargadas desde rutas locales.
 - Reproducción de canciones.
 - Controles de reproducir/pausar, anterior, siguiente, aleatorio y repetir.
 - Control de volumen.
 - Barra de progreso de la canción.
+- Fila de reproduccion de canciones.
 - Búsqueda por canción, artista, álbum o género.
 - Reproducción desde la vista de álbum.
 - Organización del código con modelos, DAOs y conexión a base de datos.
@@ -38,6 +40,7 @@ SpotCloud/
 │   └── models/
 ├── recursos/
 │   └── fonts/
+├── .gitignore
 ├── main.cpp
 ├── ventanaprincipal.cpp
 ├── ventanaprincipal.h
@@ -97,3 +100,4 @@ Actualmente SpotCloud permite navegar por álbumes, buscar contenido y reproduci
 ## Nota
 
 Proyecto académico individual desarrollado con fines educativos para la materia **Programación**.
+

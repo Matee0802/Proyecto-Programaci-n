@@ -40,3 +40,4 @@ void ColaReproduccionDAOImpl::eliminar(ColaReproduccion cr)
         qDebug() << "Error al eliminar ColaReproduccion:" << query.lastError().text();
     }
 }
+

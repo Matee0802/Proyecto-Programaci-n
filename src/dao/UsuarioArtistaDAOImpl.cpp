@@ -35,3 +35,4 @@ void UsuarioArtistaDAOImpl::eliminar(UsuarioArtista ua)
         qDebug() << "Error al eliminar UsuarioArtista:" << query.lastError().text();
     }
 }
+

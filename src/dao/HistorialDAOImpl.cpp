@@ -34,3 +34,4 @@ void HistorialDAOImpl::eliminar(Historial h)
         qDebug() << "Error al eliminar de Historial:" << query.lastError().text();
     }
 }
+

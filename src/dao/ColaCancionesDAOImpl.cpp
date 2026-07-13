@@ -46,3 +46,4 @@ void ColaCancionesDAOImpl::eliminar(ColaCanciones cc)
         qDebug() << "Error al eliminar ColaCanciones:" << query.lastError().text();
     }
 }
+

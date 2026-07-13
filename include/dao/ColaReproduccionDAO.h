@@ -6,3 +6,4 @@
 //Creamos la clase ColaReproduccionDAO que hereda del DAO principal
 class ColaReproduccionDAO : public DAO<ColaReproduccion> {};
 #endif
+

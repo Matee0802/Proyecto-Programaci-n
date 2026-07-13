@@ -1,17 +1,19 @@
 #ifndef CANCIONDAOIMPL_H
 #define CANCIONDAOIMPL_H
 #include "CancionDAO.h"
-#include <QList>
-//Creamos la Clase UsuarioDAOImpl que hereda de UsuarioDAO, que tambien hereda del DAO principal
-//para poder interactuar con la BD
+
 class CancionDAOImpl : public CancionDAO {
 public:
-    //Le damos las acciones que debe de realizar con la BD
     void insertar(Cancion c) override;
     void actualizar(Cancion c) override;
     void eliminar(Cancion c) override;
+
+    QSqlQueryModel *modeloCanciones(QObject *padre, int idAlbum = 0) const override;
+    QSqlQueryModel *modeloBusqueda(QObject *padre, const QString &texto) const override;
+    QVector<ElementoAdmin> buscarPorTitulo(const QString &filtro) const override;
+    QString ultimoError() const override;
+
+private:
+    mutable QString error;
 };
-
-
-
 #endif
